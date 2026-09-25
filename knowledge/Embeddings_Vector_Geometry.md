@@ -52,7 +52,7 @@ $$\Vert{}\vec{a}\Vert{} = \sqrt{\sum_{i=1}^{d} a_i^2} = \sqrt{a_1^2 + a_2^2 + \d
 
 #### O que significa cada símbolo?
 * **$\Vert{}\vec{a}\Vert{}$ (Barras duplas ao redor do vetor):** Símbolo que indica a operação de **norma** ou **módulo** do vetor $\vec{a}$.
-* **$\sqrt{\phantom{x}}$ (Raiz Quadrada):** A operação final para obter o comprimento real, desfazendo os quadrados internos.
+* **$\sqrt{\quad}$ (Raiz Quadrada):** A operação final para obter o comprimento real, desfazendo os quadrados internos.
 * **$a_i^2$:** O valor da componente na posição $i$ do vetor elevado ao quadrado ($a_i \times a_i$). Elevar ao quadrado garante que todos os valores fiquem positivos.
 * **$a_1^2 + a_2^2 + \dots + a_d^2$:** A expansão da soma dos quadrados de todas as posições do vetor.
 
