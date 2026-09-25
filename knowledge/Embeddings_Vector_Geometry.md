@@ -127,11 +127,11 @@ Uma das propriedades mais impressionantes dos embeddings é que as **direções 
 
 O exemplo mais famoso da literatura de IA é a analogia da Realeza e Gênero:
 
-$$\vec{v}_\text{Rei} - \vec{v}_\text{Homem} + \vec{v}_\text{Mulher} \approx \vec{v}_\text{Rainha}$$
+$$\vec{v}_{\text{Rei}} - \vec{v}_{\text{Homem}} + \vec{v}_{\text{Mulher}} \approx \vec{v}_{\text{Rainha}}$$
 
 **A intuição por trás da fórmula:**
-1. Quando pegamos o vetor $\vec{v}_\text{Rei}$ e subtraímos $\vec{v}_\text{Homem}$, estamos "removendo" o conceito/atributo de masculinidade da palavra "Rei" (sobrando apenas a essência abstrata da "realeza").
-2. Quando somamos $\vec{v}_\text{Mulher}$, estamos "injetando" a dimensão de feminilidade nessa essência de realeza.
+1. Quando pegamos o vetor $\vec{v}_{\text{Rei}}$ e subtraímos $\vec{v}_{\text{Homem}}$, estamos "removendo" o conceito/atributo de masculinidade da palavra "Rei" (sobrando apenas a essência abstrata da "realeza").
+2. Quando somamos $\vec{v}_{\text{Mulher}}$, estamos "injetando" a dimensão de feminilidade nessa essência de realeza.
 3. O vetor resultante estará localizado em uma posição do espaço cujos valores numéricos são quase idênticos aos do vetor da palavra **"Rainha"**.
 
 ---
