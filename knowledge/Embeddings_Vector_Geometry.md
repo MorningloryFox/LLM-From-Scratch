@@ -82,8 +82,8 @@ $$\cos(\theta) = \frac{\vec{a} \cdot \vec{b}}{\Vert{}\vec{a}\Vert{} \Vert{}\vec{
 ## 🧮 3. Exemplo Numérico Passo a Passo ($d=2$)
 
 Para visualizar a matemática funcionando na prática, vamos simular dois vetores fictícios em um espaço simples de apenas **2 dimensões** ($d=2$):
-* $\vec{a}_{\text{Rei}} = [2, 1]$
-* $\vec{b}_{\text{Rainha}} = [1, 2]$
+* $\vec{a}_\text{Rei} = [2, 1]$
+* $\vec{b}_\text{Rainha} = [1, 2]$
 
 ---
 
@@ -127,11 +127,11 @@ Uma das propriedades mais impressionantes dos embeddings é que as **direções 
 
 O exemplo mais famoso da literatura de IA é a analogia da Realeza e Gênero:
 
-$$\vec{v}_{\text{Rei}} - \vec{v}_{\text{Homem}} + \vec{v}_{\text{Mulher}} \approx \vec{v}_{\text{Rainha}}$$
+$$\vec{v}_\text{Rei} - \vec{v}_\text{Homem} + \vec{v}_\text{Mulher} \approx \vec{v}_\text{Rainha}$$
 
 **A intuição por trás da fórmula:**
-1. Quando pegamos o vetor $\vec{v}_{\text{Rei}}$ e subtraímos $\vec{v}_{\text{Homem}}$, estamos "removendo" o conceito/atributo de masculinidade da palavra "Rei" (sobrando apenas a essência abstrata da "realeza").
-2. Quando somamos $\vec{v}_{\text{Mulher}}$, estamos "injetando" a dimensão de feminilidade nessa essência de realeza.
+1. Quando pegamos o vetor $\vec{v}_\text{Rei}$ e subtraímos $\vec{v}_\text{Homem}$, estamos "removendo" o conceito/atributo de masculinidade da palavra "Rei" (sobrando apenas a essência abstrata da "realeza").
+2. Quando somamos $\vec{v}_\text{Mulher}$, estamos "injetando" a dimensão de feminilidade nessa essência de realeza.
 3. O vetor resultante estará localizado em uma posição do espaço cujos valores numéricos são quase idênticos aos do vetor da palavra **"Rainha"**.
 
 ---
@@ -141,9 +141,9 @@ $$\vec{v}_{\text{Rei}} - \vec{v}_{\text{Homem}} + \vec{v}_{\text{Mulher}} \appro
 Para entender numericamente como essa conta funciona dentro do computador, vamos simular 3 dimensões fictícias projetadas para capturar 3 atributos específicos: `[Realeza, Gênero, Poder]`.
 
 Considere os vetores fictícios padronizados:
-* $\vec{v}_{\text{Rei}} = [0{,}9, -0{,}8, 0{,}7]$ *(Alta realeza, gênero masculino/negativo, alto poder)*
-* $\vec{v}_{\text{Homem}} = [0{,}0, -0{,}8, 0{,}1]$ *(Sem realeza, gênero masculino/negativo, baixo poder)*
-* $\vec{v}_{\text{Mulher}} = [0{,}0, 0{,}8, 0{,}1]$ *(Sem realeza, gênero feminino/positivo, baixo poder)*
+* $\vec{v}_\text{Rei} = [0{,}9, -0{,}8, 0{,}7]$ *(Alta realeza, gênero masculino/negativo, alto poder)*
+* $\vec{v}_\text{Homem} = [0{,}0, -0{,}8, 0{,}1]$ *(Sem realeza, gênero masculino/negativo, baixo poder)*
+* $\vec{v}_\text{Mulher} = [0{,}0, 0{,}8, 0{,}1]$ *(Sem realeza, gênero feminino/positivo, baixo poder)*
 
 #### Efetuando o cálculo dimensão por dimensão:
 
@@ -159,4 +159,4 @@ Considere os vetores fictícios padronizados:
 #### Resultado Obtido:
 $$[0{,}9, 0{,}8, 0{,}7]$$
 
-Ao buscar no banco de dados vetorial qual palavra possui o vetor mais próximo de $[0{,}9, 0{,}8, 0{,}7]$, o algoritmo encontra exatamente a palavra **$\vec{v}_{\text{Rainha}}$** (que representa alta realeza, gênero feminino e alto poder).
+Ao buscar no banco de dados vetorial qual palavra possui o vetor mais próximo de $[0{,}9, 0{,}8, 0{,}7]$, o algoritmo encontra exatamente a palavra **$\vec{v}_\text{Rainha}$** (que representa alta realeza, gênero feminino e alto poder).
