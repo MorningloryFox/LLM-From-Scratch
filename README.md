@@ -9,8 +9,8 @@ Repositório dedicado ao estudo, implementação e documentação dos fundamento
 ## 🧭 Mapa da Jornada de Aprendizado
 
 - [x] **01. Embeddings & Espaços Vetoriais:** Representação de tokens, cálculo de similaridade por cosseno e aritmética vetorial.
-- [ ] **02. Tokenização:** Fatiamento de texto bruto em tokens (BPE) e tabelas de mapeamento.
-- [ ] **03. Mecanismos de Atenção:** Scaled Dot-Product Attention, matrizes de pesos ($Q, K, V$) e máscaras causais.
+- [x] **02. Tokenização:** Fatiamento de texto bruto em tokens (BPE) e tabelas de mapeamento.
+- [x] **03. Mecanismos de Atenção:** Scaled Dot-Product Attention, matrizes de pesos ($Q, K, V$) e máscaras causais.
 - [ ] **04. Arquitetura Transformer:** Camadas Feed-Forward (SwiGLU), RMSNorm e embeddings rotacionais (RoPE).
 - [ ] **05. Inferência & KV-Cache:** Geração auto-regressiva, amostragem (Temperature, Top-$k$, Top-$p$) e otimização em VRAM/RAM.
 - [ ] **06. Quantização & Aritmética Numérica:** Representação em FP16, INT8, INT4 e exportação em formato de bloco (GGUF).
