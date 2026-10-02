@@ -39,19 +39,56 @@ flowchart LR
 
 No treino, o modelo recebe uma sequência e tenta prever o próximo caractere. Calculamos a perda e ajustamos os pesos. Na geração, escolhemos o próximo caractere e repetimos o processo.
 
-## Rodar na máquina local
+## Clonar, treinar e acompanhar localmente
 
-Requisitos: Python 3.11 ou mais recente e PyTorch. Na raiz do repositório, no PowerShell:
+Requisitos: Git, Python 3.11 ou mais recente e PowerShell. Clone o repositório e prepare um ambiente isolado:
 
 ```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -e .
-python -m llm_from_scratch.train --data data/tiny.txt --steps 500
-python -m llm_from_scratch.generate --checkpoint checkpoints/feneco-char-0.1.pt --prompt "O modelo"
+git clone https://github.com/MorningloryFox/LLM-From-Scratch.git
+cd LLM-From-Scratch
+.\scripts\setup.ps1
 ```
 
-O checkpoint fica em `checkpoints/`, que é ignorada pelo Git. Corpus privado deve ficar em `data/private/`, também ignorada. Vamos treinar e avaliar nesta máquina; depois decidimos se algum peso treinado deve ser compartilhado. Nada será incluído no Git automaticamente.
+Se estiver no Prompt de Comando (`cmd.exe`) em vez do PowerShell, chame os mesmos scripts assim:
+
+```bat
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\train.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\evaluate.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\history.ps1
+```
+
+O preparo instala PyTorch e o projeto no ambiente `.venv`. Para iniciar um treino com o corpus didático:
+
+```powershell
+.\scripts\train.ps1
+```
+
+Para usar outro corpus local, mudar passos, contexto ou semente:
+
+```powershell
+.\scripts\train.ps1 -Data data/private/meu-corpus.txt -Steps 1000 -ContextLength 64 -Seed 42
+```
+
+O treino separa o texto em segmentos contíguos de 80% para treino, 10% para validação e 10% para teste. A validação escolhe o melhor checkpoint; o teste fica de fora dessa escolha. Ao final, o terminal mostra parâmetros, camadas, cabeças, perdas e onde salvou o checkpoint. Para repetir a avaliação do conjunto de teste com mais lotes:
+
+```powershell
+.\scripts\evaluate.ps1 -Data data/private/meu-corpus.txt -Batches 100
+```
+
+Gere texto com o checkpoint:
+
+```powershell
+.\.venv\Scripts\python.exe -m llm_from_scratch.generate --checkpoint checkpoints/feneco-char-0.1.pt --prompt "O modelo"
+```
+
+Cada treino acrescenta uma linha a `.local/experiments.jsonl`, com hash do corpus, revisão do código, configuração, contagens de parâmetros/cabeças, quantização, perdas, duração, dispositivo e tamanho do checkpoint. Consulte um resumo das execuções com:
+
+```powershell
+.\scripts\history.ps1
+```
+
+Checkpoints, histórico e corpus privado ficam em pastas ignoradas pelo Git. A contagem e a perda atuais são métricas do laboratório **por caractere**; elas ainda não medem busca web, citações ou qualidade de resposta do Feneco-Web. Os scripts não publicam dados nem pesos.
 
 ## Como vamos medir
 

@@ -27,6 +27,6 @@ Particionar texto exige cuidado. Janelas vizinhas se sobrepõem, então uma divi
 
 ## Estado atual no Feneco
 
-O script reserva o último trecho de 10% do arquivo como validação e imprime perdas de treino e validação periodicamente. Não existe conjunto de teste separado, repetição com sementes controladas, seleção de checkpoint por validação ou arquivo de resultados. O corpus incluído é pequeno demais para conclusões sobre generalização.
+O script divide o arquivo em segmentos contíguos de 80% para treino, 10% para validação e 10% para teste. A validação seleciona o melhor checkpoint; o teste é medido depois dessa seleção. Semente, SHA-256 do corpus, configuração, perdas, duração, dispositivo e métricas do modelo são registrados localmente em `.local/experiments.jsonl`. O corpus incluído é pequeno demais para conclusões sobre generalização.
 
 Antes de comparar mudanças, vamos registrar: nome/versão do experimento, origem e hash do corpus, partições, tokenizador, configuração, semente, passos, perdas, duração e amostras. O conteúdo do corpus privado deve continuar local; para compartilhar um resultado, podemos registrar métricas e metadados não sensíveis.

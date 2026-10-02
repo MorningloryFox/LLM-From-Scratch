@@ -31,15 +31,15 @@ Para o PyTorch, a chamada básica é:
 torch.manual_seed(42)
 ```
 
-O Feneco atual **não** define uma semente. Isso significa que inicialização dos pesos e janelas sorteadas podem mudar entre execuções. `torch.manual_seed(42)` inicializa os geradores do PyTorch; se o código também usar o módulo `random` ou NumPy, esses geradores precisam de sementes próprias. Ativar operações determinísticas pode reduzir diferenças, mas algumas operações ficam mais lentas ou deixam de estar disponíveis.
+O script atual usa uma semente configurável para o PyTorch e para as janelas sorteadas. Ativar operações determinísticas pode reduzir diferenças, mas algumas operações ficam mais lentas ou deixam de estar disponíveis.
 
 Uma semente fixa ajuda a comparar alterações, mas não transforma toda execução em uma garantia bit a bit. Devemos registrar versões e hardware junto com a semente.
 
 ## 📦 4. Checkpoint: inferir ou retomar o treino?
 
-Um checkpoint de inferência precisa dos pesos, da configuração e do vocabulário/tokenizador. O checkpoint atual do Feneco guarda estado do modelo, configuração, vocabulário, passos e contagem de parâmetros.
+Um checkpoint de inferência precisa dos pesos, da configuração e do vocabulário/tokenizador. O checkpoint atual do Feneco guarda estado do modelo, configuração, vocabulário, passos, contagem de parâmetros, perdas selecionadas e hash do corpus.
 
-Para retomar o treino exatamente de onde parou, também precisamos do estado do otimizador, do passo atual e dos estados dos geradores aleatórios. Esses itens ainda não são guardados pelo script. Logo, o checkpoint atual permite gerar texto; não reproduz integralmente o caminho de otimização.
+Para retomar o treino exatamente de onde parou, também precisamos do estado do otimizador, do passo atual e dos estados dos geradores aleatórios. Esses itens ainda não são guardados pelo script. Logo, o checkpoint atual permite gerar texto e avaliar; não reproduz integralmente o caminho de otimização.
 
 Os pesos são artefatos locais ignorados pelo Git. Corpus privado também deve permanecer local.
 
