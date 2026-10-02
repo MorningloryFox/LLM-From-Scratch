@@ -1,0 +1,14 @@
+{
+  "source_pdf": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\ua000181.pdf",
+  "source_pdf_sha256": "ad5a8aa2a99d91e7ee124367b13ff39af67e04a32c0328e273f900af6e2ecae3",
+  "output_txt": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\ua000181.txt",
+  "title": "A Cartomante",
+  "author": null,
+  "pages": 8,
+  "pages_without_extractable_text": 0,
+  "text_characters": 18538,
+  "extractor": "pypdf",
+  "extractor_version": "6.19.0",
+  "extracted_utc": "2026-10-02T17:51:59.443223+00:00",
+  "note": "Extração automática; revisar o TXT antes de usar no corpus. Não executa OCR."
+}

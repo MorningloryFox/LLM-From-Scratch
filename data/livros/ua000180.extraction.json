@@ -1,0 +1,14 @@
+{
+  "source_pdf": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\ua000180.pdf",
+  "source_pdf_sha256": "7646fa5f163f56720933d5eb18ee1f1c3193e1763ad9a8f95fff0eabc3604c4a",
+  "output_txt": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\ua000180.txt",
+  "title": "A Carteira",
+  "author": null,
+  "pages": 4,
+  "pages_without_extractable_text": 0,
+  "text_characters": 7887,
+  "extractor": "pypdf",
+  "extractor_version": "6.19.0",
+  "extracted_utc": "2026-10-02T17:51:59.238326+00:00",
+  "note": "Extração automática; revisar o TXT antes de usar no corpus. Não executa OCR."
+}

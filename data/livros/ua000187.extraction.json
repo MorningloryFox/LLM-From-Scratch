@@ -1,0 +1,14 @@
+{
+  "source_pdf": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\ua000187.pdf",
+  "source_pdf_sha256": "a147d8d18fae339c22d01c8f92322592800b7c7d6847148228a2603b9e4a47f5",
+  "output_txt": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\ua000187.txt",
+  "title": "A Semana",
+  "author": null,
+  "pages": 210,
+  "pages_without_extractable_text": 0,
+  "text_characters": 705258,
+  "extractor": "pypdf",
+  "extractor_version": "6.19.0",
+  "extracted_utc": "2026-10-02T17:52:06.153718+00:00",
+  "note": "Extração automática; revisar o TXT antes de usar no corpus. Não executa OCR."
+}

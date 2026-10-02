@@ -1,0 +1,14 @@
+{
+  "source_pdf": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\fs00190a.pdf",
+  "source_pdf_sha256": "95f301854e879e9e4f749b91b7d305fc04ea1acf8d71d95f0b71dbe5d185a6cd",
+  "output_txt": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\fs00190a.txt",
+  "title": null,
+  "author": null,
+  "pages": 7,
+  "pages_without_extractable_text": 0,
+  "text_characters": 11569,
+  "extractor": "pypdf",
+  "extractor_version": "6.19.0",
+  "extracted_utc": "2026-10-02T17:51:59.112021+00:00",
+  "note": "Extração automática; revisar o TXT antes de usar no corpus. Não executa OCR."
+}

@@ -18,7 +18,7 @@ Com `L=2`, `H=4` e `T=64`, isso dá 16.640 pares permitidos por sequência. A im
 
 ## Isso é um grafo de pensamento?
 
-Não. A máscara e os pesos de atenção podem ser desenhados como um grafo entre posições, mas esses pesos não representam uma lista explícita de pensamentos, fatos ou passos de raciocínio. Nosso modelo atual gera o próximo caractere; não emite uma estrutura de raciocínio com nós e arestas.
+Não. A máscara e os pesos de atenção podem ser desenhados como um grafo entre posições, mas esses pesos não representam uma lista explícita de pensamentos, fatos ou passos de raciocínio. Feneco-Token prevê o próximo token BPE; não emite uma estrutura de raciocínio com nós e arestas.
 
 Se fizermos no futuro um experimento de grafo explícito, precisamos definir o formato de nó e relação, como o modelo o produz, como contamos nós/arestas e como julgamos se o grafo é útil. Até lá, chamaremos estas medidas de **parâmetros**, **cabeças** e **conexões de atenção**, sem chamá-las de pensamentos.
 

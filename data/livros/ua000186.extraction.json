@@ -1,0 +1,14 @@
+{
+  "source_pdf": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\ua000186.pdf",
+  "source_pdf_sha256": "52a9451438c3152d013170b5f50535a738b580a0a0e50aca1375393015327d36",
+  "output_txt": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\ua000186.txt",
+  "title": "AMulherdePreto",
+  "author": null,
+  "pages": 22,
+  "pages_without_extractable_text": 0,
+  "text_characters": 50044,
+  "extractor": "pypdf",
+  "extractor_version": "6.19.0",
+  "extracted_utc": "2026-10-02T17:52:01.645971+00:00",
+  "note": "Extração automática; revisar o TXT antes de usar no corpus. Não executa OCR."
+}

@@ -1,0 +1,14 @@
+{
+  "source_pdf": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\ua000184.pdf",
+  "source_pdf_sha256": "f7220c804c2a78a78c65fc1bea9ab808fbe9a9255eeea22d0ff48aa17c0f88d4",
+  "output_txt": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\ua000184.txt",
+  "title": "A Igreja do Diabo",
+  "author": null,
+  "pages": 7,
+  "pages_without_extractable_text": 0,
+  "text_characters": 15978,
+  "extractor": "pypdf",
+  "extractor_version": "6.19.0",
+  "extracted_utc": "2026-10-02T17:51:59.628606+00:00",
+  "note": "Extração automática; revisar o TXT antes de usar no corpus. Não executa OCR."
+}

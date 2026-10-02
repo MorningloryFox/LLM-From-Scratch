@@ -1,0 +1,14 @@
+{
+  "source_pdf": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\ua000189.pdf",
+  "source_pdf_sha256": "05d95f2d968c4b5f8e2a9cb649c6373b40800d2bfbab3e08a030239cf3ebfb54",
+  "output_txt": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\ua000189.txt",
+  "title": "Balas de Estalo",
+  "author": null,
+  "pages": 62,
+  "pages_without_extractable_text": 0,
+  "text_characters": 189319,
+  "extractor": "pypdf",
+  "extractor_version": "6.19.0",
+  "extracted_utc": "2026-10-02T17:52:07.183921+00:00",
+  "note": "Extração automática; revisar o TXT antes de usar no corpus. Não executa OCR."
+}

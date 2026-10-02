@@ -15,6 +15,7 @@ from llm_from_scratch.experiment import count_parameters, corpus_sha256, set_see
 from llm_from_scratch.corpus import load_documents, split_documents
 from llm_from_scratch.model import Feneco, ModelConfig
 from llm_from_scratch.train import estimate_loss, split_corpus
+from llm_from_scratch.tokenizer import load_tokenizer
 
 console = Console()
 
@@ -36,6 +37,9 @@ def main() -> None:
         raise SystemExit(f"Checkpoint not found: {args.checkpoint}")
 
     checkpoint = torch.load(args.checkpoint, map_location="cpu", weights_only=True)
+    if "tokenizer_json" in checkpoint:
+        evaluate_token_checkpoint(args, checkpoint)
+        return
     expected_digest = checkpoint.get("corpus_sha256")
     if expected_digest and corpus_sha256(args.data) != expected_digest:
         raise SystemExit(
@@ -95,6 +99,36 @@ def main() -> None:
     table.add_row("Arquitetura", f"{config.number_of_layers} camadas • {config.number_of_heads} cabeças por camada • sem quantização")
     console.print(Panel(table, title="[bold bright_cyan]Avaliação do Feneco[/]", border_style="cyan"))
     console.print(Panel("Métrica de linguagem por caractere; não mede qualidade de pesquisa web nem de respostas.", border_style="yellow", title="Limite da métrica"))
+
+
+def evaluate_token_checkpoint(args: argparse.Namespace, checkpoint: dict) -> None:
+    tokenizer = load_tokenizer(checkpoint["tokenizer_json"])
+    documents = load_documents(args.data)
+    if args.data.is_dir():
+        texts, files = split_documents(documents, checkpoint["model_config"]["context_length"], checkpoint["seed"])
+        test_text = texts[2]
+        held_out_books = len(files[2])
+    else:
+        text = documents[0][1]
+        test_text = text[int(len(text) * .9):]
+        held_out_books = 0
+    test_data = torch.tensor(tokenizer.encode(test_text).ids, dtype=torch.long)
+    config = ModelConfig(**checkpoint["model_config"])
+    if len(test_data) < config.context_length + 2:
+        raise SystemExit("Partição de teste curta para este contexto em tokens.")
+    set_seed(args.seed)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = Feneco(config).to(device)
+    model.load_state_dict(checkpoint["model_state"])
+    loss = estimate_loss(model, test_data, args.batch_size, config.context_length, device, args.seed, args.batches)
+    table = Table.grid(padding=(0, 2)); table.add_column(style="cyan", justify="right"); table.add_column()
+    table.add_row("Dispositivo", str(device)); table.add_row("Perda de teste", f"{loss:.4f}")
+    if args.data.is_dir(): table.add_row("Livros reservados para teste", str(held_out_books))
+    table.add_row("Perplexidade", f"{math.exp(loss):.4f}"); table.add_row("Tokenizador", f"BPE em bytes • {config.vocab_size:,} tokens")
+    table.add_row("Contexto", f"{config.context_length} tokens"); table.add_row("Parâmetros", f"{count_parameters(model)['total_parameters']:,}")
+    table.add_row("Arquitetura", f"{config.number_of_layers} camadas • {config.number_of_heads} cabeças/camada • sem quantização")
+    console.print(Panel(table, title="Avaliação do Feneco-Token", border_style="cyan"))
+    console.print(Panel("Perda e perplexidade por token BPE; compare apenas com o mesmo tokenizador e a mesma partição.", border_style="yellow", title="Limite da métrica"))
 
 
 if __name__ == "__main__":

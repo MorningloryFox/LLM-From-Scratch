@@ -20,6 +20,6 @@ Essas regras mudam a diversidade e os erros, não os pesos treinados. Para compa
 
 ## No Feneco hoje
 
-`generate.py` carrega um checkpoint local, converte o prefixo com o vocabulário salvo e pede novos caracteres. Prefixos com caracteres desconhecidos são recusados. O limite `--tokens` conta caracteres, não palavras.
+`generate.py` carrega um checkpoint local e usa o tokenizador que está salvo nele. Em Feneco-Token, o limite `--tokens` conta unidades BPE, não palavras nem caracteres; o byte-level BPE consegue codificar texto Unicode novo. Checkpoints de Feneco-Char continuam usando seu vocabulário de caracteres.
 
-O gerador reexecuta o modelo sobre o contexto disponível a cada novo caractere. Não há token de fim de sequência dedicado; a geração para quando alcança o limite configurado. [Cache KV](./KV_Cache.md) pode evitar parte desse trabalho no futuro.
+O gerador reexecuta o modelo sobre o contexto disponível a cada novo token e ainda não usa cache KV. No ajuste de conversa, `<|end|>` marca o fim de uma resposta; no pré-treino de livros, a geração normalmente para quando alcança o limite configurado. [Cache KV](./KV_Cache.md) pode evitar parte desse trabalho no futuro.

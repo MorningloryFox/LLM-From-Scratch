@@ -1,0 +1,14 @@
+{
+  "source_pdf": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\bv000262.pdf",
+  "source_pdf_sha256": "83ac1c6c50b4dc0cd4e3b17860d2f314131c456881fe1e0dc0525e358203f4e2",
+  "output_txt": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\bv000262.txt",
+  "title": "Microsoft Word - acausa.html",
+  "author": "EspartacoCoelho",
+  "pages": 8,
+  "pages_without_extractable_text": 0,
+  "text_characters": 20913,
+  "extractor": "pypdf",
+  "extractor_version": "6.19.0",
+  "extracted_utc": "2026-10-02T17:51:23.687830+00:00",
+  "note": "Extração automática; revisar o TXT antes de usar no corpus. Não executa OCR."
+}

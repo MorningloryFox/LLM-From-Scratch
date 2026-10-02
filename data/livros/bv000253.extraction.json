@@ -1,0 +1,14 @@
+{
+  "source_pdf": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\bv000253.pdf",
+  "source_pdf_sha256": "ec7a281f852eeab811643c8fa2fa1e59a727c4088c541b7ae41878d039699d47",
+  "output_txt": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\bv000253.txt",
+  "title": "Microsoft Word - teste.doc",
+  "author": "EspartacoCoelho",
+  "pages": 8,
+  "pages_without_extractable_text": 0,
+  "text_characters": 15186,
+  "extractor": "pypdf",
+  "extractor_version": "6.19.0",
+  "extracted_utc": "2026-10-02T17:51:20.331373+00:00",
+  "note": "Extração automática; revisar o TXT antes de usar no corpus. Não executa OCR."
+}

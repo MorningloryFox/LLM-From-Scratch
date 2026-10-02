@@ -1,0 +1,14 @@
+{
+  "source_pdf": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\bn000050.pdf",
+  "source_pdf_sha256": "9ea97b5d46746dec9f878a2d62dc4ff2cf5b71d65eb5118bf94868754e46c2a7",
+  "output_txt": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\bn000050.txt",
+  "title": "Microsoft Word - americanas.rtf",
+  "author": null,
+  "pages": 67,
+  "pages_without_extractable_text": 0,
+  "text_characters": 108039,
+  "extractor": "pypdf",
+  "extractor_version": "6.19.0",
+  "extracted_utc": "2026-10-02T17:51:03.747294+00:00",
+  "note": "Extração automática; revisar o TXT antes de usar no corpus. Não executa OCR."
+}

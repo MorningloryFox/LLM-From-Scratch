@@ -1,0 +1,14 @@
+{
+  "source_pdf": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\bv000239.pdf",
+  "source_pdf_sha256": "ac53dc44ed395b38fedefdec07fe95a19e65a6cc141901dbc3539a42ef0c8420",
+  "output_txt": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\bv000239.txt",
+  "title": "Microsoft Word - serenissima.html",
+  "author": "EspartacoCoelho",
+  "pages": 6,
+  "pages_without_extractable_text": 0,
+  "text_characters": 17954,
+  "extractor": "pypdf",
+  "extractor_version": "6.19.0",
+  "extracted_utc": "2026-10-02T17:51:19.177665+00:00",
+  "note": "Extração automática; revisar o TXT antes de usar no corpus. Não executa OCR."
+}

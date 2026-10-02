@@ -22,4 +22,4 @@ As notas acompanham o código e mostram o que já está implementado, o que é u
 
 ## Situação no código
 
-O Feneco-Char-0.1 usa tokenização por caractere, embeddings de posição aprendidos, atenção causal, LayerNorm, MLP com GELU, treino por próximo token e geração por amostragem com temperatura. BPE, RoPE, RMSNorm, SwiGLU, cache KV, quantização, avaliação de especialistas e conjunto de teste separado ainda não estão implementados.
+Feneco-Char permanece como linha histórica com tokenização por caractere. Feneco-Token implementa BPE em bytes, embeddings de posição aprendidos, atenção causal, LayerNorm, MLP com GELU, previsão do próximo token, partições de validação/teste e geração com temperatura. O ajuste supervisionado usa perda só nas respostas do assistente. RoPE, RMSNorm, SwiGLU, cache KV, quantização e avaliações próprias dos especialistas continuam como tópicos para estudar ou implementar depois; as notas são material de referência, não uma lista de requisitos que deve entrar toda de uma vez no modelo.

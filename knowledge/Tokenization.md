@@ -3,7 +3,7 @@
 Um modelo não recebe palavras diretamente. Um tokenizador divide o texto em unidades e converte cada unidade num ID inteiro. O modelo usa esses IDs para consultar embeddings.
 
 ```text
-"bom dia" → ["b", "o", "m", " ", "d", "i", "a"] → [IDs] → vetores
+"bom dia" → ["bom", " dia"] → [IDs] → vetores
 ```
 
 Os IDs são apenas identificadores. Se trocarmos todos os IDs e atualizarmos a tabela de embeddings na mesma ordem, o significado do sistema não muda.
@@ -22,12 +22,12 @@ Byte Pair Encoding começa com unidades básicas e repete uma operação: contar
 
 Alguns tokenizadores modernos começam por bytes em vez de caracteres Unicode. Isso ajuda a representar qualquer texto, mas “BPE” não determina sozinho todos os detalhes de um tokenizador. Não é correto afirmar que uma palavra específica sempre vira o mesmo número de pedaços sem executar um tokenizador definido.
 
-## O tokenizador atual do Feneco
+## Feneco-Char e Feneco-Token
 
-O treino cria um vocabulário com `sorted(set(text))` e atribui um ID a cada caractere Python distinto no corpus. Durante a geração, um caractere ausente nesse vocabulário causa erro. Espaços, pontuação, maiúsculas e letras acentuadas são unidades diferentes.
+Feneco-Char cria um vocabulário com `sorted(set(text))` e usa um ID para cada caractere Python encontrado no corpus. Feneco-Token usa BPE em bytes UTF-8 por meio da biblioteca `tokenizers`: começa com o alfabeto de bytes e aprende fusões frequentes até o tamanho configurado do vocabulário. Com isso, texto não visto continua representável. O tokenizer é treinado somente sobre a partição de treino e seu JSON é guardado no checkpoint.
 
-Essa simplicidade é boa para acompanhar os primeiros passos, mas ruim para eficiência: uma frase de 10 palavras pode ocupar dezenas de posições. BPE fica para uma etapa posterior; primeiro queremos entender o ciclo de treino com a versão por caractere.
+Subpalavras costumam representar texto com menos posições que caracteres, então um contexto de 256 tokens pode cobrir mais texto do que 64 caracteres. A quantidade real varia conforme a língua e o corpus; precisamos medi-la, não assumir uma proporção fixa. Mudar de caractere para BPE altera IDs, embeddings e projeção de saída: é necessário treinar um checkpoint novo. Treino, geração e avaliação devem usar exatamente o tokenizer salvo com o checkpoint.
 
 ## Pergunta para experimentar
 
-Se o corpus de treino não contém `ç`, o que acontece ao pedir geração com um prefixo que contém `ç`? E por que trocar o tokenizador depois do treino sem retreinar embeddings quebra o significado dos IDs?
+Compare o número de tokens BPE e caracteres de uma frase em português. Como a resposta muda para palavras raras, URLs ou outra língua?

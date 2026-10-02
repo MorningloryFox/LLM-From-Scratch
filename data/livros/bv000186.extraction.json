@@ -1,0 +1,14 @@
+{
+  "source_pdf": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\bv000186.pdf",
+  "source_pdf_sha256": "3572345a8be1ec69d90432c267a9004936ea00bd34af1dae1d6eb353f0b338ba",
+  "output_txt": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\bv000186.txt",
+  "title": "Microsoft Word - abc.rtf",
+  "author": "EspartacoCoelho",
+  "pages": 23,
+  "pages_without_extractable_text": 0,
+  "text_characters": 85509,
+  "extractor": "pypdf",
+  "extractor_version": "6.19.0",
+  "extracted_utc": "2026-10-02T17:51:09.308396+00:00",
+  "note": "Extração automática; revisar o TXT antes de usar no corpus. Não executa OCR."
+}

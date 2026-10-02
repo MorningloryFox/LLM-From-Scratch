@@ -1,0 +1,14 @@
+{
+  "source_pdf": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\bv000211.pdf",
+  "source_pdf_sha256": "2521020cc981aa4295615bfa1a333f09c3a7d24ec3a56453227789f29928385d",
+  "output_txt": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\bv000211.txt",
+  "title": "Microsoft Word - aaa.rtf",
+  "author": "EspartacoCoelho",
+  "pages": 6,
+  "pages_without_extractable_text": 0,
+  "text_characters": 16545,
+  "extractor": "pypdf",
+  "extractor_version": "6.19.0",
+  "extracted_utc": "2026-10-02T17:51:16.825886+00:00",
+  "note": "Extração automática; revisar o TXT antes de usar no corpus. Não executa OCR."
+}

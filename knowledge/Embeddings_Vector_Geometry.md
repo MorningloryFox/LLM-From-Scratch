@@ -42,4 +42,4 @@ Em alguns embeddings treinados, analogias como `rei - homem + mulher ≈ rainha`
 
 ## No Feneco
 
-`Feneco` soma o embedding do token com um embedding de posição aprendido. Ainda não implementamos comparações de similaridade nem visualização dos vetores. O capítulo de tokenização explica como o texto vira IDs.
+`Feneco` soma o embedding do token com um embedding de posição aprendido. No Feneco-Token, cada linha corresponde a um ID BPE e o tamanho da tabela depende do vocabulário salvo no checkpoint. Trocar o tokenizador sem retreinar os embeddings muda quais unidades aqueles IDs representam. Ainda não implementamos comparações de similaridade nem visualização dos vetores. O capítulo de tokenização explica como o texto vira IDs.

@@ -1,0 +1,14 @@
+{
+  "source_pdf": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\ua000185.pdf",
+  "source_pdf_sha256": "f274876fd8e2324f6bf52be850381fc6736cc6a20de2a431f5f61655e153287f",
+  "output_txt": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\ua000185.txt",
+  "title": "A Mão e a Luva",
+  "author": null,
+  "pages": 71,
+  "pages_without_extractable_text": 0,
+  "text_characters": 201737,
+  "extractor": "pypdf",
+  "extractor_version": "6.19.0",
+  "extracted_utc": "2026-10-02T17:52:01.181095+00:00",
+  "note": "Extração automática; revisar o TXT antes de usar no corpus. Não executa OCR."
+}

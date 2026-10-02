@@ -7,7 +7,10 @@ name = "llm-from-scratch"
 version = "0.1.0"
 description = "Feneco family: small language models for focused tasks"
 requires-python = ">=3.11"
-dependencies = ["torch>=2.2", "rich>=13.7", "pypdf>=5.0"]
+dependencies = ["torch>=2.2", "rich>=13.7", "pypdf>=5.0", "tokenizers>=0.20"]
+
+[project.optional-dependencies]
+data = ["datasets>=3.0", "huggingface_hub>=0.26", "truststore>=0.10"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

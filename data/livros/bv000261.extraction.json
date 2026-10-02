@@ -1,0 +1,14 @@
+{
+  "source_pdf": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\bv000261.pdf",
+  "source_pdf_sha256": "bdb7239f536e5a0f58f3b521bacf709cf607dbd6b4795fc09613be4943ed90ae",
+  "output_txt": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\bv000261.txt",
+  "title": "Microsoft Word - adesejada.html",
+  "author": "EspartacoCoelho",
+  "pages": 7,
+  "pages_without_extractable_text": 0,
+  "text_characters": 18933,
+  "extractor": "pypdf",
+  "extractor_version": "6.19.0",
+  "extracted_utc": "2026-10-02T17:51:21.909982+00:00",
+  "note": "Extração automática; revisar o TXT antes de usar no corpus. Não executa OCR."
+}

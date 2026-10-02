@@ -54,11 +54,11 @@ Para comparar duas versões:
 4. Separe carregamento, treino e geração.
 5. Registre processador, número de threads, versões de Python/PyTorch e dispositivo.
 
-Para geração, podemos medir tokens por segundo. No Feneco, token significa **caractere**, então essa taxa não pode ser comparada diretamente com a de um modelo que usa BPE. Também podemos medir a latência até o primeiro caractere e o tempo médio dos caracteres seguintes.
+Para geração, podemos medir tokens por segundo. No Feneco-Token, token significa uma unidade do tokenizer BPE em bytes; essa taxa não pode ser comparada diretamente com a taxa por caractere do Feneco-Char. Também podemos medir a latência até o primeiro token e o tempo médio dos tokens seguintes.
 
 ## 🧰 5. Situação atual do Feneco
 
-O script escolhe CUDA quando PyTorch informa que CUDA está disponível; caso contrário, usa CPU. Não há opção de linha de comando para forçar o dispositivo. O treino ainda não registra duração nem pico de RAM. O gerador recalcula a sequência inteira a cada caractere e não usa cache KV.
+O script escolhe CUDA quando PyTorch informa que CUDA está disponível; caso contrário, usa CPU. Não há opção de linha de comando para forçar o dispositivo. O treino registra duração, mas ainda não mede pico de RAM. O gerador recalcula a sequência inteira a cada token e não usa cache KV. O contexto padrão do Feneco-Token é 256 tokens; como a atenção cresce aproximadamente com o quadrado do contexto, essa alteração aumenta o custo em comparação com os checkpoints por caractere de contexto 64.
 
 Primeiro vamos medir uma linha de base local. Só depois faz sentido comparar cache, precisão menor ou outras otimizações. Uma otimização é útil se melhora tempo ou memória sem causar uma piora inaceitável nas perdas e amostras.
 

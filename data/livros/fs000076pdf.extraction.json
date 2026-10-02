@@ -1,0 +1,14 @@
+{
+  "source_pdf": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\fs000076pdf.pdf",
+  "source_pdf_sha256": "62661c899e297d14263010c3e884586afb812b62ad6f5cc8235f5b93a27e8e25",
+  "output_txt": "C:\\Users\\daniel.silva\\feneco-web\\LLM-From-Scratch\\data\\livros\\fs000076pdf.txt",
+  "title": null,
+  "author": null,
+  "pages": 6,
+  "pages_without_extractable_text": 0,
+  "text_characters": 19343,
+  "extractor": "pypdf",
+  "extractor_version": "6.19.0",
+  "extracted_utc": "2026-10-02T17:51:52.850400+00:00",
+  "note": "Extração automática; revisar o TXT antes de usar no corpus. Não executa OCR."
+}
