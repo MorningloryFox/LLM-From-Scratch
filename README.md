@@ -82,16 +82,17 @@ Para treinar o laboratório com o conto incluído:
 
 ### Extrair textos de vários PDFs
 
-Coloque os livros em PDF dentro de `data` e extraia os textos com:
+Organize os arquivos por assunto, colocando os livros em `data\livros` e outros materiais em pastas próprias, como `data\outroassunto`. A extração salva o `.txt` e o `.extraction.json` junto do PDF, mantendo cada assunto agrupado. Para processar a pasta inteira `data` e suas subpastas:
 
 ```powershell
 .\scripts\extract-pdfs.ps1
 ```
 
-O comando também procura PDFs em subpastas. Os textos ficam em `data\txt` e os metadados em `data\json`, preservando as subpastas e os nomes dos PDFs para evitar colisões. Se o TXT já existir, ele é preservado; para substituir arquivos existentes, use `-Overwrite`. Também é possível indicar um PDF ou outra pasta:
+O comando procura PDFs nas subpastas. Se o TXT já existir, ele é preservado; para substituir arquivos existentes, use `-Overwrite`. Também é possível indicar uma pasta por assunto ou um PDF específico:
 
 ```powershell
 .\scripts\extract-pdfs.ps1 -Path "data\livros"
+.\scripts\extract-pdfs.ps1 -Path "data\outroassunto"
 .\scripts\extract-pdfs.ps1 -Path "data\ua000180.pdf"
 ```
 

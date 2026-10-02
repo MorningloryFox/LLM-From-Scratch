@@ -30,15 +30,11 @@ def find_pdfs(source: Path) -> list[Path]:
 
 def extract_one(
     pdf_path: Path,
-    relative_path: Path,
-    output_root: Path,
     overwrite: bool,
     delete_pdf: bool,
 ) -> dict[str, object]:
-    text_path = output_root / "txt" / relative_path.with_suffix(".txt")
-    metadata_path = output_root / "json" / relative_path.with_name(
-        f"{relative_path.stem}.extraction.json"
-    )
+    text_path = pdf_path.with_suffix(".txt")
+    metadata_path = pdf_path.with_name(f"{pdf_path.stem}.extraction.json")
     if text_path.exists() and not overwrite:
         return {"pdf": str(pdf_path), "status": "Ignorado (TXT já existe)", "characters": 0}
 
@@ -111,9 +107,6 @@ def main() -> None:
     if not pdfs:
         console.print(Panel(f"Nenhum PDF encontrado em {args.path}.", title="Extração de livros", border_style="yellow"))
         return
-    input_root = source if source.is_dir() else source.parent
-    output_root = input_root
-
     rows: list[dict[str, object]] = []
     failures: list[tuple[str, str]] = []
     with Progress(
@@ -124,12 +117,7 @@ def main() -> None:
         for pdf in pdfs:
             progress.update(task, description=f"Extraindo {pdf.name}")
             try:
-                relative_path = pdf.relative_to(input_root)
-                rows.append(
-                    extract_one(
-                        pdf, relative_path, output_root, args.overwrite, args.delete_pdf
-                    )
-                )
+                rows.append(extract_one(pdf, args.overwrite, args.delete_pdf))
             except Exception as error:
                 failures.append((str(pdf), str(error)))
             progress.advance(task)
