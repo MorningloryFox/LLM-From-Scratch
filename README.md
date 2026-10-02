@@ -168,6 +168,23 @@ O comando salva `checkpoints/feneco-chat-oasst1-token-0.1.pt` e registra as perd
 .\scripts\chat.ps1 -Checkpoint checkpoints/feneco-chat-oasst1-token-0.1.pt -AssistantChat -Tokens 120
 ```
 
+### Primeira rodada medida: Feneco-Chat-OASST1-Token-0.1
+
+O ajuste supervisionado partiu do pré-treino nos livros e usou 379 conversas para treino, 60 para validação e 40 para teste. A execução terminou em CPU após 1.000 passos.
+
+| Configuração medida | Resultado |
+| --- | ---: |
+| Parâmetros totais e treináveis | 247.552 |
+| Camadas e cabeças | 2 camadas • 4 cabeças por camada |
+| Contexto e vocabulário | 256 tokens • 1.024 IDs |
+| Quantização | Nenhuma |
+| Perda de validação, tokens do assistente | 4,5340 |
+| Perda no teste reservado, tokens do assistente | 4,3772 |
+| Duração em CPU | 397,3 s (6 min 37 s) |
+| Checkpoint local | `checkpoints/feneco-chat-oasst1-token-0.1.pt` (1.025.067 bytes) |
+
+O treino e a sessão de chat funcionaram, mas as respostas aos prompts “oi”, “andar” e “teste” ainda saíram incoerentes. Portanto, estas métricas registram uma execução reproduzível, não uma capacidade de conversa útil. A quantidade de conversas, a cobertura em português e a arquitetura pequena continuam sendo limites importantes. As perdas são por token BPE e não devem ser comparadas diretamente com a rodada histórica por caractere abaixo.
+
 ### Registro histórico: Feneco-Chat-OASST1-0.2 (por caractere)
 
 O ajuste local usou 379 conversas para treino, 60 para validação e 40 para teste. A rodada 0.2 partiu da 0.1 e terminou em CPU após 5.000 passos.
