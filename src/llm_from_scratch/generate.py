@@ -5,12 +5,12 @@ from pathlib import Path
 
 import torch
 
-from llm_from_scratch.model import ModelConfig, TinyGPT
+from llm_from_scratch.model import Mirim, ModelConfig
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--checkpoint", type=Path, default=Path("checkpoints/tiny-gpt.pt"))
+    parser.add_argument("--checkpoint", type=Path, default=Path("checkpoints/mirim-0.1.pt"))
     parser.add_argument("--prompt", default="")
     parser.add_argument("--tokens", type=int, default=200)
     parser.add_argument("--temperature", type=float, default=0.8)
@@ -23,7 +23,7 @@ def main() -> None:
     if unknown:
         raise SystemExit(f"Prompt contains characters absent from training corpus: {unknown!r}")
 
-    model = TinyGPT(ModelConfig(**checkpoint["model_config"]))
+    model = Mirim(ModelConfig(**checkpoint["model_config"]))
     model.load_state_dict(checkpoint["model_state"])
     model.eval()
     prompt_ids = [token_to_id[character] for character in args.prompt]

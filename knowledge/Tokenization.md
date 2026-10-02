@@ -1,83 +1,33 @@
-# 02. Tokenização e Byte Pair Encoding (BPE) 🔤
+# Tokenização: do texto aos IDs
 
-## 🎯 1. Conceito Fundamental
+Um modelo não recebe palavras diretamente. Um tokenizador divide o texto em unidades e converte cada unidade num ID inteiro. O modelo usa esses IDs para consultar embeddings.
 
-Antes que qualquer conta matemática de vetor, matriz ou Similaridade de Cosseno aconteça, a Inteligência Artificial precisa converter o texto bruto — que para o computador é apenas uma *string* (sequência de caracteres) — em números inteiros. A esses números damos o nome de **IDs de Tokens**.
+```text
+"bom dia" → ["b", "o", "m", " ", "d", "i", "a"] → [IDs] → vetores
+```
 
-O **Token** é a menor unidade de texto que um modelo de linguagem (LLM) consegue processar. Cada token possui um **ID único** (por exemplo, o ID $4521$), e é justamente esse número que serve como "endereço" para buscar o vetor correspondente na tabela de embeddings.
+Os IDs são apenas identificadores. Se trocarmos todos os IDs e atualizarmos a tabela de embeddings na mesma ordem, o significado do sistema não muda.
 
-Texto Bruto ("Eu amo física")
-↓
+## Três escolhas comuns
 
-[ Tokenizador ]
+- **Palavra inteira:** poucas posições para palavras conhecidas, mas vocabulário enorme e problemas com palavras novas.
+- **Caractere:** vocabulário menor e qualquer palavra pode ser representada, mas as sequências ficam longas.
+- **Subpalavra:** divide palavras raras em pedaços reutilizáveis; BPE é uma forma de construir esse vocabulário.
 
-↓
+Nenhuma opção é universalmente melhor. Tokenização é parte do modelo: no treino e na geração é preciso usar exatamente o mesmo vocabulário e as mesmas regras.
 
-IDs Numéricos ([1243, 8562, 19842])
+## BPE em resumo
 
-↓
+Byte Pair Encoding começa com unidades básicas e repete uma operação: contar pares adjacentes, fundir o par mais frequente e registrar essa fusão. Ao codificar texto depois, aplica-se a sequência aprendida de fusões. O resultado depende do corpus, das regras de pré-processamento, da unidade inicial e do tamanho de vocabulário escolhido.
 
-[ Tabela de Embeddings ]
+Alguns tokenizadores modernos começam por bytes em vez de caracteres Unicode. Isso ajuda a representar qualquer texto, mas “BPE” não determina sozinho todos os detalhes de um tokenizador. Não é correto afirmar que uma palavra específica sempre vira o mesmo número de pedaços sem executar um tokenizador definido.
 
-↓
+## O tokenizador atual do Mirim
 
-Vetores Multidimensionais ($\vec{v} \in \mathbb{R}^d$)
+O treino cria um vocabulário com `sorted(set(text))` e atribui um ID a cada caractere Python distinto no corpus. Durante a geração, um caractere ausente nesse vocabulário causa erro. Espaços, pontuação, maiúsculas e letras acentuadas são unidades diferentes.
 
----
+Essa simplicidade é boa para acompanhar os primeiros passos, mas ruim para eficiência: uma frase de 10 palavras pode ocupar dezenas de posições. BPE fica para uma etapa posterior; primeiro queremos entender o ciclo de treino com a versão por caractere.
 
-## 🧱 2. Como o Texto é Fatiado?
+## Pergunta para experimentar
 
-Existem três abordagens clássicas para dividir um texto em unidades menores:
-
-### A. Tokenização por Palavra Inteira
-O texto é separado por espaços e pontuações:
-> `"Eu amo física"` $\rightarrow$ `["Eu", "amo", "física"]`
-
-* ❌ **Problema:** O dicionário (vocabulário) do modelo precisa guardar centenas de milhares de palavras. Se o usuário digitar uma palavra nova, uma variação rara ou um erro de digitação (ex: `"físicasss"`), o modelo não entenderá e a tratará como um token desconhecido (`<UNK>`).
-
-### B. Tokenização por Caractere
-O texto é fatiado caractere por caractere, incluindo espaços:
-> `"Eu amo física"` $\rightarrow$ `["E", "u", " ", "a", "m", "o", " ", "f", "í", "s", "i", "c", "a"]`
-
-* ❌ **Problema:** O vocabulário fica minúsculo (apenas o alfabeto e símbolos), mas a sequência final fica gigantesca. O modelo precisa gastar muita capacidade computacional para entender o significado de uma palavra inteira, pois precisa ligar vários caracteres isolados.
-
-### C. Tokenização por Subpalavra (Subword - BPE)
-É o padrão utilizado por LLMs modernos (como GPT-4, Claude e Llama). 
-
-* Palavras frequentes continuam sendo um único token.
-* Palavras raras, compostas ou com erros são divididas em pedaços menores que o modelo já conhece.
-
-> Exemplo: `"desmagnetização"` $\rightarrow$ `["des", "magneti", "zação"]`
-
----
-
-## ⚙️ 3. O Algoritmo BPE (Byte Pair Encoding)
-
-O **Byte Pair Encoding (BPE)** é um algoritmo de compressão de dados adaptado para inteligência artificial. Ele constrói o vocabulário de forma estatística, observando um grande conjunto de textos (*corpus*).
-
-### Como o BPE funciona passo a passo:
-
-1. **Vocabulário Inicial:** O BPE começa apenas com os caracteres individuais (ex: letras `a`, `b`, `c`, `d`...).
-2. **Contagem de Frequência:** O algoritmo varre o texto e conta a frequência com que cada par de caracteres adjacentes aparece lado a lado.
-3. **Fusão (Merge):** O par mais frequente é fundido para criar um novo token único, que é adicionado ao vocabulário.
-4. **Repetição:** O processo se repete de forma iterativa por milhares de vezes até que o vocabulário atinja o tamanho desejado (ex: $32.000$ ou $100.000$ tokens).
-
-#### Exemplo Prático de Fusão:
-Imagine um vocabulário inicial simples: `['a', 'b', 'c', 'd']`.
-Se no texto de treinamento o par `'a'` + `'b'` aparecer milhares de vezes junta, o BPE cria o token `'ab'` e o adiciona ao vocabulário:
-
-$$\text{Vocabulário Novo} = ['a', 'b', 'c', 'd', 'ab']$$
-
-A partir desse momento, a sequência de caracteres `"ab"` passa a ser contada como $1$ único token em vez de $2$.
-
----
-
-## 💡 Guiding Question (Para Pensar)
-
-Para fixar a lógica do BPE:
-
-> **Cenário:** Suponha que temos um texto em que a palavra `"física"` aparece $1.000$ vezes e a palavra `"físico"` aparece $800$ vezes.
-> 
-> **Pergunta:** Qual sequência ou par de letras/subpalavras o algoritmo BPE iria identificar e fundir primeiro para economizar mais espaço de armazenamento e computação?
-
-*R: '"físic"'*
+Se o corpus de treino não contém `ç`, o que acontece ao pedir geração com um prefixo que contém `ç`? E por que trocar o tokenizador depois do treino sem retreinar embeddings quebra o significado dos IDs?
