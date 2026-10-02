@@ -67,7 +67,8 @@ def get_batch(encoded, windows, size, context, pad_id, device, rng):
     selections = torch.randint(len(windows), (size,), generator=rng).tolist()
     xs, ys = [], []
     for choice in selections:
-        sequence, start = windows[choice]; ids, mask = sequence
+        sequence_index, start = windows[choice]
+        ids, mask = encoded[sequence_index]
         part = ids[start:start + context + 1]
         flags = mask[start:start + context + 1]
         x = part[:-1]; y = [part[i + 1] if flags[i + 1] else -100 for i in range(len(part) - 1)]
