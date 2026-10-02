@@ -60,7 +60,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\evaluate.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\history.ps1
 ```
 
-O preparo instala PyTorch e o projeto no ambiente `.venv`. Para iniciar um treino com o corpus didático:
+O preparo instala PyTorch, Rich (para tabelas, painéis e barras de progresso no terminal) e o projeto no ambiente `.venv`. Se já clonou o projeto antes desta melhoria, atualize o clone e rode `.\scripts\setup.ps1` novamente para instalar a dependência.
+
+Para iniciar um treino com o corpus didático:
 
 ```powershell
 .\scripts\train.ps1

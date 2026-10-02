@@ -7,10 +7,15 @@ import math
 from pathlib import Path
 
 import torch
+from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
 
 from llm_from_scratch.experiment import count_parameters, corpus_sha256, set_seed
 from llm_from_scratch.model import Feneco, ModelConfig
 from llm_from_scratch.train import estimate_loss, split_corpus
+
+console = Console()
 
 
 def main() -> None:
@@ -58,17 +63,16 @@ def main() -> None:
         args.seed,
         args.batches,
     )
-    print(f"device={device}")
-    print(f"test_loss={loss:.4f} test_perplexity={math.exp(loss):.4f}")
-    print(f"parameters={count_parameters(model)['total_parameters']}")
-    print(
-        f"layers={config.number_of_layers} heads_per_layer={config.number_of_heads} "
-        "quantization=none"
-    )
-    print(
-        "Note: this is a character-level language-model metric; it does not measure "
-        "web-search or answer quality."
-    )
+    table = Table.grid(padding=(0, 2))
+    table.add_column(style="cyan", justify="right")
+    table.add_column()
+    table.add_row("Dispositivo", str(device))
+    table.add_row("Perda de teste", f"{loss:.4f}")
+    table.add_row("Perplexidade", f"{math.exp(loss):.4f}")
+    table.add_row("Parâmetros", f"{count_parameters(model)['total_parameters']:,}")
+    table.add_row("Arquitetura", f"{config.number_of_layers} camadas • {config.number_of_heads} cabeças por camada • sem quantização")
+    console.print(Panel(table, title="[bold bright_cyan]Avaliação do Feneco[/]", border_style="cyan"))
+    console.print(Panel("Métrica de linguagem por caractere; não mede qualidade de pesquisa web nem de respostas.", border_style="yellow", title="Limite da métrica"))
 
 
 if __name__ == "__main__":

@@ -4,8 +4,13 @@ import argparse
 from pathlib import Path
 
 import torch
+from rich.console import Console
+from rich.panel import Panel
+from rich.text import Text
 
 from llm_from_scratch.model import Feneco, ModelConfig
+
+console = Console()
 
 
 def main() -> None:
@@ -32,7 +37,8 @@ def main() -> None:
     generated = model.generate(
         torch.tensor([prompt_ids], dtype=torch.long), args.tokens, args.temperature
     )
-    print("".join(vocabulary[index] for index in generated[0].tolist()))
+    output = "".join(vocabulary[index] for index in generated[0].tolist())
+    console.print(Panel(Text(output), title="Feneco-Char • texto gerado", border_style="bright_cyan", padding=(1, 2)))
 
 
 if __name__ == "__main__":
