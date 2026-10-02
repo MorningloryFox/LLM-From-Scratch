@@ -18,6 +18,7 @@ As notas acompanham o código e mostram o que já está implementado, o que é u
 14. [Cache KV](./KV_Cache.md)
 15. [Quantização](./Quantization.md)
 16. [Planejar modelos especialistas](./Specialist_Models.md)
+17. [Fontes de dados e coleta](./Data_Sources_and_Collection.md)
 
 ## Situação no código
 

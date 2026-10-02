@@ -4,7 +4,7 @@
 
 Este projeto não pretende competir com modelos gerais grandes como GPT ou Claude. Quero aprender a construir modelos e sistemas menores que façam muito bem um trabalho delimitado: ajudar com código, responder sobre um assunto específico ou pesquisar na web com fontes.
 
-## Primeiro membro: Feneco-Char-0.1
+## Laboratório atual: Feneco-Char-0.1
 
 O protótipo atual é um decoder Transformer pequeno em Python e PyTorch. Ele lê um caractere por vez e aprende a prever o próximo caractere num corpus local. É um exercício para entender tensores, atenção, treino e geração; **ainda não é um especialista nem um modelo útil para tarefas reais**.
 
@@ -16,13 +16,13 @@ Cada modelo Feneco terá uma tarefa e uma avaliação próprias. Algumas direç�
 
 | Especialista | Trabalho que queremos avaliar | O que mais pode ser necessário |
 | --- | --- | --- |
-| **Feneco-Code** | Completar, explicar ou revisar código numa linguagem e contexto definidos | Repositórios de avaliação isolados e execução controlada dos exemplos |
-| **Feneco-[Assunto]** | Responder questões delimitadas de um domínio | Corpus autorizado e, quando necessário, busca em documentos de referência |
-| **Feneco-Research** | Pesquisar uma pergunta, resumir evidências e citar fontes | Busca e leitura de páginas atuais; o modelo sozinho não sabe o que mudou na web |
+| **Feneco-Web-0.1** | Pesquisar uma pergunta, resumir evidências e citar fontes | Busca e leitura de páginas atuais; o modelo sozinho não sabe o que mudou na web |
+| **Feneco-Code-0.1** | Completar, explicar ou revisar código numa linguagem e contexto definidos | Repositórios de avaliação isolados e execução controlada dos exemplos |
+| **Feneco-[Assunto]-0.1** | Responder questões delimitadas de um domínio | Corpus autorizado e, quando necessário, busca em documentos de referência |
 
 “Pequeno, mas poderoso” vai significar bom resultado numa tarefa definida, medido em exemplos que não entraram no treino. Tamanho de parâmetros, por si só, não é medida de capacidade.
 
-Para cada especialista, vamos decidir com evidência se faz sentido treinar do zero, adaptar outro modelo ou combinar um modelo com recuperação de documentos e ferramentas. O Feneco-Char continua sendo nosso laboratório de fundamentos; não vamos tratá-lo como base pronta para todos os especialistas.
+Vamos começar pelo Feneco-Web, seguir para Feneco-Code e depois escolher um domínio específico. Para cada especialista, decidiremos com evidência se faz sentido treinar do zero, adaptar outro modelo ou combinar um modelo com recuperação de documentos e ferramentas. O Feneco-Char continua sendo nosso laboratório de fundamentos, não uma base pronta para todos os especialistas.
 
 ## Como o protótipo aprende
 
@@ -63,18 +63,19 @@ O checkpoint fica em `checkpoints/`, que é ignorada pelo Git. Corpus privado de
 | Tempo, memória e dispositivo | Saber se cabe e responde bem na máquina-alvo |
 | Fontes e cobertura | Para pesquisa/web, conferir se respostas se apoiam nas páginas consultadas |
 
-O script atual imprime configuração, contagens e perdas de treino/validação. Ainda não há teste separado nem avaliação de código ou pesquisa. Também não contamos “pensamentos”: conexões de atenção não são passos de raciocínio explícitos.
+O script atual imprime configuração, contagens e perdas de treino/validação. Ainda não há teste separado nem avaliação de código ou pesquisa. Depois de cada treino, registraremos no README apenas os valores medidos daquela versão — parâmetros, cabeças, quantização se houver e resultados da avaliação. Configurações planejadas não serão apresentadas como métricas de um modelo treinado. Também não contamos “pensamentos”: conexões de atenção não são passos de raciocínio explícitos.
 
 ## Plano de trabalho
 
 1. Entender o protótipo por caractere e suas métricas.
 2. Separar avaliação de teste e registrar experimentos reproduzíveis.
-3. Escolher **um** especialista inicial e definir exemplos de sucesso e falha antes de treinar.
-4. Preparar dados autorizados e comparar a estratégia de treino adequada para essa tarefa.
+3. Planejar e preparar fontes com licença e proveniência registradas para Feneco-Web.
+4. Definir exemplos de sucesso/falha e comparar dados, busca e estratégia de treino.
 5. Treinar e testar localmente; medir qualidade, custo e limites.
-6. Só depois decidir se publicamos código, pesos ou nenhum artefato no GitHub.
+6. Depois, planejar Feneco-Code e um especialista de domínio.
+7. Só então decidir se publicamos código, pesos ou nenhum artefato no GitHub.
 
-O [guia de estudo](./knowledge/README.md) cobre os fundamentos técnicos. A nota sobre [modelos especialistas](./knowledge/Specialist_Models.md) explica como vamos planejar a família.
+O [guia de estudo](./knowledge/README.md) cobre os fundamentos técnicos. As notas sobre [modelos especialistas](./knowledge/Specialist_Models.md) e [fontes de dados](./knowledge/Data_Sources_and_Collection.md) explicam como vamos planejar a família e seus corpora.
 
 ## Licença
 

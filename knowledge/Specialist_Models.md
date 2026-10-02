@@ -33,11 +33,11 @@ Cada opção tem custos, dependências e capacidades diferentes. Vamos escolher 
 
 | Família candidata | Escopo inicial | Avaliação que precisamos preparar |
 | --- | --- | --- |
-| **Feneco-Code** | Uma tarefa de programação delimitada, como explicar funções ou corrigir erros simples | Casos separados de treino, tarefas novas, execução controlada e testes de saída |
-| **Feneco-[Assunto]** | Perguntas de um domínio específico escolhido depois | Questões representativas, respostas de referência, cobertura e origem das fontes |
-| **Feneco-Research** | Buscar fontes atuais, resumir evidências e responder com referências | Consultas conhecidas, qualidade/recência das fontes, suporte de cada afirmação e registro de links |
+| **Feneco-Web-0.1** | Buscar fontes atuais, resumir evidências e responder com referências | Consultas conhecidas, qualidade/recência das fontes, suporte de cada afirmação e registro de links |
+| **Feneco-Code-0.1** | Uma tarefa de programação delimitada, como explicar funções ou corrigir erros simples | Casos separados de treino, tarefas novas, execução controlada e testes de saída |
+| **Feneco-[Assunto]-0.1** | Perguntas de um domínio específico escolhido depois | Questões representativas, respostas de referência, cobertura e origem das fontes |
 
-Cada entrada é uma direção de planejamento, não uma capacidade já implementada. Feneco-Research descreve principalmente um **sistema** com busca e leitura de páginas, não apenas um checkpoint de pesos.
+Cada entrada é uma direção de planejamento, não uma capacidade já implementada. Feneco-Web descreve principalmente um **sistema** com busca e leitura de páginas, não apenas um checkpoint de pesos. O plano inicial de dados está em [Fontes de dados e coleta](./Data_Sources_and_Collection.md).
 
 ## 📏 5. Definir capacidade antes de treinar
 
