@@ -22,6 +22,7 @@ from llm_from_scratch.experiment import (
     set_seed,
     timestamp_utc,
 )
+from llm_from_scratch.corpus import load_documents, split_documents
 from llm_from_scratch.model import Feneco, ModelConfig, config_to_dict
 
 console = Console()
@@ -98,7 +99,10 @@ def estimate_loss(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data", type=Path, required=True, help="UTF-8 text corpus")
+    parser.add_argument(
+        "--data", type=Path, required=True,
+        help="UTF-8 .txt file or folder of .txt documents",
+    )
     parser.add_argument("--steps", type=int, default=500)
     parser.add_argument("--context-length", type=int, default=64)
     parser.add_argument("--batch-size", type=int, default=16)
@@ -112,16 +116,26 @@ def main() -> None:
     args = parser.parse_args()
     if args.steps < 1 or args.batch_size < 1 or args.evaluation_batches < 1:
         raise SystemExit("steps, batch-size, and evaluation-batches must be positive")
-    if not args.data.is_file():
-        raise SystemExit(f"Corpus not found: {args.data}")
-
-    text = args.data.read_text(encoding="utf-8")
-    if not text:
-        raise SystemExit("The corpus is empty.")
+    documents = load_documents(args.data)
+    text = "\n\n".join(content for _, content in documents)
     vocabulary = sorted(set(text))
     token_to_id = {character: index for index, character in enumerate(vocabulary)}
     encoded = torch.tensor([token_to_id[character] for character in text], dtype=torch.long)
-    train_data, validation_data, test_data = split_corpus(encoded, args.context_length)
+    if args.data.is_dir():
+        split_texts, split_files = split_documents(
+            documents, args.context_length, args.seed
+        )
+        train_data, validation_data, test_data = (
+            torch.tensor([token_to_id[character] for character in part], dtype=torch.long)
+            for part in split_texts
+        )
+        split_strategy = "whole_documents"
+    else:
+        train_data, validation_data, test_data = split_corpus(
+            encoded, args.context_length
+        )
+        split_files = ((), (), ())
+        split_strategy = "contiguous_text_segments"
 
     set_seed(args.seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -140,6 +154,8 @@ def main() -> None:
     summary.add_column()
     summary.add_row("Dispositivo", str(device))
     summary.add_row("Corpus", f"{len(encoded):,} caracteres • vocabulário {len(vocabulary)}")
+    if args.data.is_dir():
+        summary.add_row("Livros por divisão", f"{len(split_files[0])} treino • {len(split_files[1])} validação • {len(split_files[2])} teste")
     summary.add_row("Arquitetura", f"{config.number_of_layers} camadas • {config.number_of_heads} cabeças por camada")
     summary.add_row("Parâmetros", f"{counts['total_parameters']:,} no total • {counts['trainable_parameters']:,} treináveis")
     summary.add_row("Pares de atenção causal", f"{allowed_attention_pairs:,} no contexto completo")
@@ -214,6 +230,12 @@ def main() -> None:
             "best_validation_loss": best_validation_loss,
             "test_loss": test_loss,
             "corpus_sha256": corpus_digest,
+            "split_strategy": split_strategy,
+            "split_files": {
+                "train": list(split_files[0]),
+                "validation": list(split_files[1]),
+                "test": list(split_files[2]),
+            },
         },
         args.checkpoint,
     )
@@ -238,6 +260,12 @@ def main() -> None:
             "train": len(train_data),
             "validation": len(validation_data),
             "test": len(test_data),
+        },
+        "split_strategy": split_strategy,
+        "split_files": {
+            "train": list(split_files[0]),
+            "validation": list(split_files[1]),
+            "test": list(split_files[2]),
         },
         "model_config": config_to_dict(config),
         **counts,

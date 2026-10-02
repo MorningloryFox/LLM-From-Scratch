@@ -16,7 +16,7 @@ O PyTorch calcula gradientes dessa perda com *backpropagation*. Um otimizador, n
 - **Validação:** dados separados do treino, usados para comparar configurações e perceber sobreajuste; não devem atualizar os pesos.
 - **Teste:** conjunto mantido de lado até escolhermos a configuração final; dá uma estimativa mais honesta do resultado final.
 
-Particionar texto exige cuidado. Janelas vizinhas se sobrepõem, então uma divisão aleatória por janela pode pôr trechos quase iguais nos dois lados. Em corpus ordenado, uma divisão por segmentos contíguos costuma ser mais segura. Dados duplicados ou quase duplicados também podem vazar entre partições.
+Particionar texto exige cuidado. Janelas vizinhas se sobrepõem, então uma divisão aleatória por janela pode pôr trechos quase iguais nos dois lados. Para um único arquivo, uma divisão por segmentos contíguos evita espalhar janelas vizinhas entre partições. Para uma coleção de livros, é melhor manter cada obra inteira em treino, validação ou teste, para medir o desempenho em obras não vistas. Dados duplicados ou quase duplicados ainda podem vazar entre partições e devem ser identificados.
 
 ## Métricas
 
@@ -27,6 +27,6 @@ Particionar texto exige cuidado. Janelas vizinhas se sobrepõem, então uma divi
 
 ## Estado atual no Feneco
 
-O script divide o arquivo em segmentos contíguos de 80% para treino, 10% para validação e 10% para teste. A validação seleciona o melhor checkpoint; o teste é medido depois dessa seleção. Semente, SHA-256 do corpus, configuração, perdas, duração, dispositivo e métricas do modelo são registrados localmente em `.local/experiments.jsonl`. O corpus incluído é pequeno demais para conclusões sobre generalização.
+O script aceita um arquivo ou uma pasta de arquivos `.txt`. Um arquivo é dividido em segmentos contíguos de 80/10/10; uma pasta é dividida por documento, com embaralhamento determinístico pela semente e proporções aproximadas pela quantidade de obras. A validação seleciona o melhor checkpoint; o teste é medido depois dessa seleção. Semente, SHA-256 do corpus, configuração, arquivos de cada partição, perdas, duração, dispositivo e métricas do modelo são registrados localmente em `.local/experiments.jsonl`. Mesmo com partições por obra, cópias da mesma obra em arquivos diferentes podem causar vazamento e devem ser removidas ou agrupadas antes da divisão.
 
 Antes de comparar mudanças, vamos registrar: nome/versão do experimento, origem e hash do corpus, partições, tokenizador, configuração, semente, passos, perdas, duração e amostras. O conteúdo do corpus privado deve continuar local; para compartilhar um resultado, podemos registrar métricas e metadados não sensíveis.

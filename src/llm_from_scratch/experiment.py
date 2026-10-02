@@ -36,9 +36,19 @@ def count_parameters(model: nn.Module) -> dict[str, int]:
 
 def corpus_sha256(path: Path) -> str:
     digest = hashlib.sha256()
-    with path.open("rb") as corpus:
-        for chunk in iter(lambda: corpus.read(1024 * 1024), b""):
-            digest.update(chunk)
+    if path.is_dir():
+        text_files = sorted(item for item in path.rglob("*.txt") if item.is_file())
+        for text_file in text_files:
+            digest.update(text_file.relative_to(path).as_posix().encode("utf-8"))
+            digest.update(b"\0")
+            with text_file.open("rb") as corpus:
+                for chunk in iter(lambda: corpus.read(1024 * 1024), b""):
+                    digest.update(chunk)
+            digest.update(b"\0")
+    else:
+        with path.open("rb") as corpus:
+            for chunk in iter(lambda: corpus.read(1024 * 1024), b""):
+                digest.update(chunk)
     return digest.hexdigest()
 
 

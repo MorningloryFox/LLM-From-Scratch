@@ -80,6 +80,12 @@ Para treinar o laboratório com o conto incluído:
 .\scripts\train.ps1 -Data data/ua000180.txt
 ```
 
+O argumento `-Data` também aceita uma pasta com vários `.txt`. Nesse modo, o script embaralha os livros com a semente da execução e separa arquivos inteiros em treino, validação e teste, evitando que partes do mesmo livro apareçam nos três conjuntos. As proporções são aproximadas por quantidade de livros; como as obras têm tamanhos diferentes, as proporções em caracteres podem variar. Por exemplo:
+
+```powershell
+.\scripts\train.ps1 -Data data/livros -Steps 5000 -Checkpoint checkpoints/feneco-char-livros-0.3.pt
+```
+
 ### Extrair textos de vários PDFs
 
 Organize os arquivos por assunto, colocando os livros em `data\livros` e outros materiais em pastas próprias, como `data\outroassunto`. A extração salva o `.txt` e o `.extraction.json` junto do PDF, mantendo cada assunto agrupado. Para processar a pasta inteira `data` e suas subpastas:
@@ -102,10 +108,10 @@ A extração usa a camada de texto que já existe no PDF. Livros digitalizados c
 .\scripts\extract-pdfs.ps1 -DeletePdf
 ```
 
-O treino separa o texto em segmentos contíguos de 80% para treino, 10% para validação e 10% para teste. A validação escolhe o melhor checkpoint; o teste fica de fora dessa escolha. Ao final, o terminal mostra parâmetros, camadas, cabeças, perdas e onde salvou o checkpoint. Para repetir a avaliação do conjunto de teste com mais lotes:
+Com um único arquivo, o treino separa o texto em segmentos contíguos de 80/10/10. Com uma pasta de livros, cada obra fica inteira em apenas uma divisão. Em ambos os casos, a validação escolhe o melhor checkpoint e o teste fica de fora dessa escolha. Para avaliar o checkpoint de livros com mais lotes:
 
 ```powershell
-.\scripts\evaluate.ps1 -Data data/private/meu-corpus.txt -Batches 100
+.\scripts\evaluate.ps1 -Data data/livros -Checkpoint checkpoints/feneco-char-livros-0.3.pt -Batches 100
 ```
 
 Gere texto com o checkpoint:

@@ -2,7 +2,8 @@ param(
     [string]$Data = "data/tiny.txt",
     [int]$Steps = 500,
     [int]$ContextLength = 64,
-    [int]$Seed = 42
+    [int]$Seed = 42,
+    [string]$Checkpoint = "checkpoints/feneco-char-0.1.pt"
 )
 
 $ErrorActionPreference = "Stop"
@@ -14,7 +15,7 @@ if (-not (Test-Path -LiteralPath $venvPython)) {
 
 Push-Location $repoRoot
 try {
-    & $venvPython -m llm_from_scratch.train --data $Data --steps $Steps --context-length $ContextLength --seed $Seed
+    & $venvPython -m llm_from_scratch.train --data $Data --steps $Steps --context-length $ContextLength --seed $Seed --checkpoint $Checkpoint
     if ($LASTEXITCODE -ne 0) { throw "O treino terminou com erro ($LASTEXITCODE)." }
 }
 finally {
