@@ -1,0 +1,15 @@
+Ola. Este e um corpus pequeno para aprender como um modelo de linguagem funciona.
+Um modelo le o texto em sequencias e tenta prever qual caractere vem a seguir.
+Durante o treino, ele compara sua previsao com o proximo caractere correto.
+Entao ajusta seus parametros para errar um pouco menos na proxima tentativa.
+Este exemplo serve para estudar o processo, nao para criar conhecimento geral.
+Com poucos dados, o modelo aprende somente padroes simples deste proprio texto.
+O proximo passo sera trocar este corpus por textos locais que podemos utilizar.
+Aprenderemos tokenizacao, atencao e redes neurais enquanto evoluimos o programa.
+Um modelo pequeno pode gerar frases estranhas, repetir palavras e cometer erros.
+Isso e esperado: primeiro precisamos entender o ciclo de treino e geracao.
+Texto de treino: linguagem, modelos, tokens, dados, contexto e previsao.
+Treinar do zero significa inicializar pesos sem carregar um modelo pretreinado.
+O modelo recebe caracteres anteriores e calcula uma distribuicao de possibilidades.
+Depois escolhe um caractere e o acrescenta a sequencia gerada.
+Repetindo esse processo, produz texto novo a partir de um prefixo inicial.

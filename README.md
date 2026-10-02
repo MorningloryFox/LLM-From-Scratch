@@ -1,33 +1,74 @@
 # LLM From Scratch
 
-Repositório dedicado ao estudo, implementação e documentação dos fundamentos matemáticos, geométricos e de engenharia por trás dos Grandes Modelos de Linguagem (LLMs).
+Um projeto de aprendizado prático para construir e treinar um modelo de linguagem decoder-only em escala pequena, entendendo cada peça no caminho.
 
-> **Meta do Projeto:** Construir um modelo de linguagem do zero (arquitetura *Decoder-Only*) focado em execução eficiente via CPU, registrando a transição da matemática teórica (álgebra linear, cálculo e geometria vetorial) para a implementação prática em código.
+## Objetivo e limites
 
----
+O objetivo inicial é implementar um GPT pequeno em PyTorch e treiná-lo do zero em texto local. A primeira versão usa tokenização por caractere para manter o foco no fluxo completo: texto → tokens → previsões do próximo token → treino → geração.
 
-## 🧭 Mapa da Jornada de Aprendizado
+Este primeiro modelo é um experimento educacional. Ele não terá conhecimento geral, não será comparável a modelos pré-treinados e só aprenderá padrões do corpus usado no treino. O foco inicial é CPU e modelos pequenos; desempenho e qualidade virão depois da implementação correta.
 
-- [x] **01. Embeddings & Espaços Vetoriais:** Representação de tokens, cálculo de similaridade por cosseno e aritmética vetorial.
-- [x] **02. Tokenização:** Fatiamento de texto bruto em tokens (BPE) e tabelas de mapeamento.
-- [x] **03. Mecanismos de Atenção:** Scaled Dot-Product Attention, matrizes de pesos ($Q, K, V$) e máscaras causais.
-- [ ] **04. Arquitetura Transformer:** Camadas Feed-Forward (SwiGLU), RMSNorm e embeddings rotacionais (RoPE).
-- [ ] **05. Inferência & KV-Cache:** Geração auto-regressiva, amostragem (Temperature, Top-$k$, Top-$p$) e otimização em VRAM/RAM.
-- [ ] **06. Quantização & Aritmética Numérica:** Representação em FP16, INT8, INT4 e exportação em formato de bloco (GGUF).
+## Primeiro marco: GPT mínimo treinável
 
----
+- [ ] Criar um corpus de treino pequeno, local e permitido para uso.
+- [x] Implementar vocabulário de caracteres e codificação/decodificação.
+- [x] Implementar decoder Transformer causal com embeddings de token e posição.
+- [x] Treinar para prever o próximo token e salvar um checkpoint.
+- [x] Gerar texto a partir de um prefixo informado.
+- [ ] Registrar configuração, corpus e resultado de cada experimento.
 
-## 🗂️ Estrutura do Banco de Conhecimento
+O primeiro marco não inclui BPE, RoPE, KV-cache, quantização, interface web nem fine-tuning de um modelo existente. Esses itens entram depois que o ciclo de treino e geração estiver compreendido e funcionando.
 
-As anotações detalhadas de cada módulo teórico e prático estão organizadas na pasta `/docs`:
+## Caminho de evolução
 
-* [`01_embeddings_e_geometria.md`](./docs/01_embeddings_e_geometria.md) — Conceitos de vetores, trigonometria, similaridade de cosseno e aritmética semântica.
+1. **GPT mínimo:** tokenização por caractere, atenção causal, treino e geração local.
+2. **Componentes modernos:** tokenizer BPE, RMSNorm, SwiGLU e RoPE, comparando cada alteração com a versão simples.
+3. **Treino melhor controlado:** validação, checkpoints retomáveis, métricas e tratamento de corpus maiores.
+4. **Inferência:** amostragem, cache KV e otimizações de memória/CPU.
+5. **Distribuição:** quantização e formatos como GGUF, se houver necessidade prática.
 
----
+## Requisitos previstos
 
-## 🛠️ Licença
+- Python 3.11 ou superior.
+- PyTorch.
+- Um corpus de texto que você tenha direito de usar; os dados de treino não devem ser enviados ao Git por padrão.
 
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+## Executar localmente
 
----
-*Desenvolvido por Morningloryfox 🦊*
+Na raiz do repositório, crie um ambiente e instale as dependências:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -e .
+```
+
+Treine com o corpus didático incluído (ou informe outro arquivo de texto UTF-8):
+
+```powershell
+python -m llm_from_scratch.train --data data/tiny.txt --steps 500
+```
+
+Gere texto usando um prefixo presente no corpus:
+
+```powershell
+python -m llm_from_scratch.generate --checkpoint checkpoints/tiny-gpt.pt --prompt "O modelo"
+```
+
+O corpus incluído é pequeno e serve apenas para demonstrar o ciclo de treino. Para um experimento próprio, salve seus dados localmente e confirme que pode usá-los. Checkpoints, ambientes virtuais e `data/private/` são ignorados pelo Git.
+
+Não há, nesta etapa, promessa de tempo de treino ou de qualidade: isso depende da máquina, do tamanho do corpus e da configuração.
+
+## Conhecimento existente
+
+As anotações em [`knowledge/`](./knowledge/) são material de referência, não componentes já implementados:
+
+- [Embeddings e geometria vetorial](./knowledge/Embeddings_Vector_Geometry.md)
+- [Tokenização](./knowledge/Tokenization.md)
+- [Mecanismo de atenção](./knowledge/Attention_Mechanism.md)
+- [RoPE](./knowledge/RotaryPositionEmbedding.md)
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT. Consulte [`LICENSE`](./LICENSE).
