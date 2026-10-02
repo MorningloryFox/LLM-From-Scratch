@@ -38,8 +38,8 @@ Logo, `cos(a,b) = 1/√2 ≈ 0,707`. Essa é uma conta geométrica, não uma med
 
 ## Aritmética vetorial
 
-Em alguns embeddings treinados, analogias como `rei - homem + mulher ≈ rainha` podem aparecer aproximadamente. Isso é uma observação empírica em certos espaços, não uma regra garantida nem uma operação que “remove” e “injeta” atributos de forma literal. Nosso Mirim começa com caracteres e um corpus minúsculo; não devemos esperar analogias semânticas dele.
+Em alguns embeddings treinados, analogias como `rei - homem + mulher ≈ rainha` podem aparecer aproximadamente. Isso é uma observação empírica em certos espaços, não uma regra garantida nem uma operação que “remove” e “injeta” atributos de forma literal. Nosso Feneco começa com caracteres e um corpus minúsculo; não devemos esperar analogias semânticas dele.
 
-## No Mirim
+## No Feneco
 
-`Mirim` soma o embedding do token com um embedding de posição aprendido. Ainda não implementamos comparações de similaridade nem visualização dos vetores. O capítulo de tokenização explica como o texto vira IDs.
+`Feneco` soma o embedding do token com um embedding de posição aprendido. Ainda não implementamos comparações de similaridade nem visualização dos vetores. O capítulo de tokenização explica como o texto vira IDs.

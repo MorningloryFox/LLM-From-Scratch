@@ -8,7 +8,7 @@ O modelo produz logits `z`. Softmax converte-os em probabilidades. Temperatura `
 
 $$p_i=\operatorname{softmax}(z_i/T)$$
 
-`T` perto de zero favorece muito o maior logit; temperaturas maiores espalham mais a probabilidade. Temperatura não melhora o modelo nem adiciona conhecimento. O Mirim usa amostragem multinomial com temperatura; o padrão do programa é `0.8`.
+`T` perto de zero favorece muito o maior logit; temperaturas maiores espalham mais a probabilidade. Temperatura não melhora o modelo nem adiciona conhecimento. O Feneco usa amostragem multinomial com temperatura; o padrão do programa é `0.8`.
 
 ## Outras regras de escolha
 
@@ -18,7 +18,7 @@ $$p_i=\operatorname{softmax}(z_i/T)$$
 
 Essas regras mudam a diversidade e os erros, não os pesos treinados. Para comparar modelos, fixamos prompt, temperatura, regra de amostragem e limite de tokens.
 
-## No Mirim hoje
+## No Feneco hoje
 
 `generate.py` carrega um checkpoint local, converte o prefixo com o vocabulário salvo e pede novos caracteres. Prefixos com caracteres desconhecidos são recusados. O limite `--tokens` conta caracteres, não palavras.
 

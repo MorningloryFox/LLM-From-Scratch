@@ -1,4 +1,4 @@
-# O bloco Transformer do Mirim
+# O bloco Transformer do Feneco
 
 Um decoder-only repete blocos que misturam o contexto anterior e transformam as representações. No fim, uma projeção produz uma pontuação para cada token possível.
 
@@ -12,7 +12,7 @@ IDs → embeddings de token + posição
 
 Uma conexão residual soma a entrada de uma subcamada à sua saída: `x ← x + f(x)`. Isso dá ao modelo um caminho direto para transportar informação e facilita o fluxo de gradientes.
 
-O Mirim usa LayerNorm antes da atenção e do MLP (*pre-norm*). LayerNorm centraliza e escala as ativações de cada posição. Uma alternativa, RMSNorm, só normaliza pela raiz da média dos quadrados:
+O Feneco usa LayerNorm antes da atenção e do MLP (*pre-norm*). LayerNorm centraliza e escala as ativações de cada posição. Uma alternativa, RMSNorm, só normaliza pela raiz da média dos quadrados:
 
 $$\operatorname{RMSNorm}(x)=\frac{x}{\sqrt{\operatorname{mean}(x^2)+\epsilon}}\odot g$$
 
@@ -32,8 +32,8 @@ SwiGLU é uma alternativa com duas projeções na expansão; uma delas passa por
 
 $$\operatorname{SwiGLU}(x)=W_o\left(\operatorname{SiLU}(W_gx)\odot W_ux\right)$$
 
-As dimensões internas costumam ser ajustadas ao orçamento do modelo. O Mirim ainda usa GELU; comparar GELU com SwiGLU exige manter dados, orçamento de parâmetros e treino comparáveis.
+As dimensões internas costumam ser ajustadas ao orçamento do modelo. O Feneco ainda usa GELU; comparar GELU com SwiGLU exige manter dados, orçamento de parâmetros e treino comparáveis.
 
 ## O que o código faz hoje
 
-`Mirim` usa embeddings de posição aprendidos, duas camadas por padrão, LayerNorm, atenção causal multi-head e MLP com GELU. A saída é um vetor de logits por posição. A configuração padrão é pequena para caber em experiências locais; não é uma receita para treinamento de produção.
+`Feneco` usa embeddings de posição aprendidos, duas camadas por padrão, LayerNorm, atenção causal multi-head e MLP com GELU. A saída é um vetor de logits por posição. A configuração padrão é pequena para caber em experiências locais; não é uma receita para treinamento de produção.

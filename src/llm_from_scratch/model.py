@@ -80,7 +80,7 @@ class TransformerBlock(nn.Module):
         return x + self.feed_forward(self.feed_forward_norm(x))
 
 
-class Mirim(nn.Module):
+class Feneco(nn.Module):
     def __init__(self, config: ModelConfig) -> None:
         super().__init__()
         self.config = config

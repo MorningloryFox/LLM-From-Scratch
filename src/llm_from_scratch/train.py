@@ -5,7 +5,7 @@ from pathlib import Path
 
 import torch
 
-from llm_from_scratch.model import Mirim, ModelConfig, config_to_dict
+from llm_from_scratch.model import Feneco, ModelConfig, config_to_dict
 
 
 def get_batch(
@@ -22,7 +22,7 @@ def main() -> None:
     parser.add_argument("--data", type=Path, required=True, help="UTF-8 text corpus")
     parser.add_argument("--steps", type=int, default=500)
     parser.add_argument("--context-length", type=int, default=64)
-    parser.add_argument("--checkpoint", type=Path, default=Path("checkpoints/mirim-0.1.pt"))
+    parser.add_argument("--checkpoint", type=Path, default=Path("checkpoints/feneco-char-0.1.pt"))
     args = parser.parse_args()
 
     text = args.data.read_text(encoding="utf-8")
@@ -44,7 +44,7 @@ def main() -> None:
     validation_data = encoded[split:]
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     config = ModelConfig(vocab_size=len(vocabulary), context_length=args.context_length)
-    model = Mirim(config).to(device)
+    model = Feneco(config).to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4)
     parameter_count = sum(
         parameter.numel() for parameter in model.parameters() if parameter.requires_grad

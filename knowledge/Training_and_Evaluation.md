@@ -25,7 +25,7 @@ Particionar texto exige cuidado. Janelas vizinhas se sobrepõem, então uma divi
 - **Amostras:** ler gerações com os mesmos prompts e parâmetros ajuda a ver repetição, coerência local e defeitos que uma média não mostra.
 - **Custo:** tempo, dispositivo, memória, passos, tamanho do corpus e configuração ajudam a repetir e comparar experiências.
 
-## Estado atual no Mirim
+## Estado atual no Feneco
 
 O script reserva o último trecho de 10% do arquivo como validação e imprime perdas de treino e validação periodicamente. Não existe conjunto de teste separado, repetição com sementes controladas, seleção de checkpoint por validação ou arquivo de resultados. O corpus incluído é pequeno demais para conclusões sobre generalização.
 

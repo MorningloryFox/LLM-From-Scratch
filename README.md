@@ -1,35 +1,43 @@
-# Mirim-0.1
+# Família Feneco
 
-> **Um modelo pequeno, feito para aprender por dentro.**
+> **Modelos pequenos, especializados e avaliados para tarefas concretas.**
 
-Este repositório acompanha a construção do **Mirim**, um modelo de linguagem decoder-only implementado em Python e PyTorch. A ideia é começar com uma versão mínima que roda nesta máquina, entender o que cada parte faz e evoluir com experimentos que possamos medir e repetir.
+Este projeto não pretende competir com modelos gerais grandes como GPT ou Claude. Quero aprender a construir modelos e sistemas menores que façam muito bem um trabalho delimitado: ajudar com código, responder sobre um assunto específico ou pesquisar na web com fontes.
 
-O nome **Mirim** é um nome de trabalho: combina com o tamanho inicial do modelo e pode mudar conforme o projeto crescer.
+## Primeiro membro: Feneco-Char-0.1
 
-## O que existe hoje
+O protótipo atual é um decoder Transformer pequeno em Python e PyTorch. Ele lê um caractere por vez e aprende a prever o próximo caractere num corpus local. É um exercício para entender tensores, atenção, treino e geração; **ainda não é um especialista nem um modelo útil para tarefas reais**.
 
-- Um decoder Transformer pequeno, escrito no projeto, com atenção causal.
-- Tokenização por caractere: simples de inspecionar, mas ineficiente para texto real.
-- Treino local para prever o próximo caractere.
-- Geração de texto a partir de um prefixo.
-- Um corpus de demonstração em [`data/tiny.txt`](./data/tiny.txt).
+O corpus em [`data/tiny.txt`](./data/tiny.txt) só serve para percorrer o fluxo. Com tão pouco texto, a geração é limitada e pode não fazer sentido.
 
-O corpus é só uma amostra para percorrer o fluxo. O Mirim não é um assistente nem um modelo de conhecimento geral: com esses dados, ele aprende padrões muito limitados e provavelmente gera texto sem sentido.
+## A família de especialistas
 
-## Como o texto vira geração
+Cada modelo Feneco terá uma tarefa e uma avaliação próprias. Algumas direções possíveis:
+
+| Especialista | Trabalho que queremos avaliar | O que mais pode ser necessário |
+| --- | --- | --- |
+| **Feneco-Code** | Completar, explicar ou revisar código numa linguagem e contexto definidos | Repositórios de avaliação isolados e execução controlada dos exemplos |
+| **Feneco-[Assunto]** | Responder questões delimitadas de um domínio | Corpus autorizado e, quando necessário, busca em documentos de referência |
+| **Feneco-Research** | Pesquisar uma pergunta, resumir evidências e citar fontes | Busca e leitura de páginas atuais; o modelo sozinho não sabe o que mudou na web |
+
+“Pequeno, mas poderoso” vai significar bom resultado numa tarefa definida, medido em exemplos que não entraram no treino. Tamanho de parâmetros, por si só, não é medida de capacidade.
+
+Para cada especialista, vamos decidir com evidência se faz sentido treinar do zero, adaptar outro modelo ou combinar um modelo com recuperação de documentos e ferramentas. O Feneco-Char continua sendo nosso laboratório de fundamentos; não vamos tratá-lo como base pronta para todos os especialistas.
+
+## Como o protótipo aprende
 
 ```mermaid
 flowchart LR
     A[Texto local] --> B[IDs de caracteres]
     B --> C[Embeddings de token e posição]
     C --> D[Blocos Transformer causais]
-    D --> E[Probabilidades do próximo caractere]
+    D --> E[Logits do próximo caractere]
     E --> F[Perda e atualização dos pesos]
     E --> G[Escolha de um caractere]
     G --> H[Texto gerado]
 ```
 
-No treino, o modelo recebe uma sequência e tenta prever o próximo caractere em cada posição. Comparamos as previsões com os alvos, calculamos a perda e ajustamos os pesos. Na geração, escolhemos um próximo caractere e repetimos o processo.
+No treino, o modelo recebe uma sequência e tenta prever o próximo caractere. Calculamos a perda e ajustamos os pesos. Na geração, escolhemos o próximo caractere e repetimos o processo.
 
 ## Rodar na máquina local
 
@@ -40,46 +48,33 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -e .
 python -m llm_from_scratch.train --data data/tiny.txt --steps 500
-python -m llm_from_scratch.generate --checkpoint checkpoints/mirim-0.1.pt --prompt "O modelo"
+python -m llm_from_scratch.generate --checkpoint checkpoints/feneco-char-0.1.pt --prompt "O modelo"
 ```
 
-O treino cria `checkpoints/mirim-0.1.pt`. Checkpoints e textos em `data/private/` ficam locais e são ignorados pelo Git. Vamos treinar e avaliar aqui; depois decidimos se algum artefato treinado deve ser compartilhado. O código-fonte e as notas podem evoluir por commits sem incluir pesos nem corpus privado.
+O checkpoint fica em `checkpoints/`, que é ignorada pelo Git. Corpus privado deve ficar em `data/private/`, também ignorada. Vamos treinar e avaliar nesta máquina; depois decidimos se algum peso treinado deve ser compartilhado. Nada será incluído no Git automaticamente.
 
-## O que vamos acompanhar
+## Como vamos medir
 
-Para comparar experimentos, vamos registrar configurações e medidas, sem confundir tamanho com capacidade:
-
-| Medida | O que nos diz |
+| Medida | Para que serve |
 | --- | --- |
-| Parâmetros treináveis | Quantos valores o otimizador pode ajustar |
-| Camadas e cabeças de atenção | Como o modelo está configurado; cabeças são contadas por camada e no total |
-| Caracteres/tokens e tamanho do vocabulário | Quanto texto entrou e quantas unidades distintas foram usadas |
-| Perda de treino e validação | Se o modelo aprende o corpus e se generaliza para trechos separados |
-| Tempo, dispositivo e configuração | Se os resultados podem ser comparados e repetidos |
-| Amostras geradas | Como as previsões se comportam, além do número da perda |
+| Parâmetros, camadas e cabeças | Descrever tamanho e configuração, sem inferir capacidade |
+| Perda de treino, validação e teste | Acompanhar previsão e generalização em partições separadas |
+| Exemplos por tarefa | Medir o especialista no trabalho que queremos dele |
+| Tempo, memória e dispositivo | Saber se cabe e responde bem na máquina-alvo |
+| Fontes e cobertura | Para pesquisa/web, conferir se respostas se apoiam nas páginas consultadas |
 
-O script imprime dispositivo, tamanho do corpus, vocabulário, parâmetros treináveis, cabeças e conexões causais permitidas, além das perdas de treino/validação. Ainda faltam um conjunto de teste separado, registro persistente de experimentos e amostras salvas. Vamos acrescentar essas medidas quando estudarmos o ciclo de avaliação.
+O script atual imprime configuração, contagens e perdas de treino/validação. Ainda não há teste separado nem avaliação de código ou pesquisa. Também não contamos “pensamentos”: conexões de atenção não são passos de raciocínio explícitos.
 
-“Grafo de pensamento” não é uma contagem que este modelo já tenha. Um Transformer calcula conexões de atenção entre posições; isso não corresponde, por si só, a pensamentos ou raciocínio explícito. Se quisermos explorar grafos como estruturas de nós e relações, vamos defini-los e medi-los como um experimento separado.
+## Plano de trabalho
 
-## Roteiro de estudo
+1. Entender o protótipo por caractere e suas métricas.
+2. Separar avaliação de teste e registrar experimentos reproduzíveis.
+3. Escolher **um** especialista inicial e definir exemplos de sucesso e falha antes de treinar.
+4. Preparar dados autorizados e comparar a estratégia de treino adequada para essa tarefa.
+5. Treinar e testar localmente; medir qualidade, custo e limites.
+6. Só depois decidir se publicamos código, pesos ou nenhum artefato no GitHub.
 
-As notas em [`knowledge/`](./knowledge/) explicam as ideias e apontam como elas aparecem — ou ainda não aparecem — no código. O [guia de estudo](./knowledge/README.md) reúne a sequência completa.
-
-1. [Embeddings e geometria](./knowledge/Embeddings_Vector_Geometry.md) e [tokenização](./knowledge/Tokenization.md).
-2. [Atenção causal](./knowledge/Attention_Mechanism.md), [bloco Transformer](./knowledge/Transformer_Block.md) e [RoPE](./knowledge/RotaryPositionEmbedding.md).
-3. [Treino e avaliação](./knowledge/Training_and_Evaluation.md) e [geração e amostragem](./knowledge/Text_Generation.md).
-4. [Métricas do modelo e conexões de atenção](./knowledge/Model_Metrics_and_Attention_Graphs.md).
-5. [Cache KV](./knowledge/KV_Cache.md) e [quantização](./knowledge/Quantization.md), quando a versão básica estiver compreendida.
-
-## Estrutura
-
-```text
-src/llm_from_scratch/   modelo, treino e geração
-data/tiny.txt           corpus de demonstração
-knowledge/              notas de estudo
-checkpoints/             pesos locais, fora do Git
-```
+O [guia de estudo](./knowledge/README.md) cobre os fundamentos técnicos. A nota sobre [modelos especialistas](./knowledge/Specialist_Models.md) explica como vamos planejar a família.
 
 ## Licença
 

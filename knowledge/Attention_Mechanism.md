@@ -20,7 +20,7 @@ Na autoatenção, Q, K e V vêm da representação da mesma sequência, por proj
 
 Ao prever o token seguinte na posição `t`, o modelo pode usar posições até `t`, mas não pode espiar posições futuras. A máscara causal bloqueia a parte superior da matriz de atenção. Assim, a previsão em cada posição pode ser treinada em paralelo sem receber a resposta futura como entrada.
 
-No Mirim, `CausalSelfAttention` calcula a pontuação, divide pela raiz da dimensão da cabeça, aplica a máscara triangular inferior, usa softmax e combina V. A implementação atual tem várias cabeças: cada uma aprende projeções diferentes, e seus resultados são reunidos.
+No Feneco, `CausalSelfAttention` calcula a pontuação, divide pela raiz da dimensão da cabeça, aplica a máscara triangular inferior, usa softmax e combina V. A implementação atual tem várias cabeças: cada uma aprende projeções diferentes, e seus resultados são reunidos.
 
 ## O que a atenção não nos diz
 

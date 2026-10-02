@@ -22,7 +22,7 @@ Byte Pair Encoding começa com unidades básicas e repete uma operação: contar
 
 Alguns tokenizadores modernos começam por bytes em vez de caracteres Unicode. Isso ajuda a representar qualquer texto, mas “BPE” não determina sozinho todos os detalhes de um tokenizador. Não é correto afirmar que uma palavra específica sempre vira o mesmo número de pedaços sem executar um tokenizador definido.
 
-## O tokenizador atual do Mirim
+## O tokenizador atual do Feneco
 
 O treino cria um vocabulário com `sorted(set(text))` e atribui um ID a cada caractere Python distinto no corpus. Durante a geração, um caractere ausente nesse vocabulário causa erro. Espaços, pontuação, maiúsculas e letras acentuadas são unidades diferentes.
 

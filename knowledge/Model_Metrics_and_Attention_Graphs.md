@@ -8,7 +8,7 @@ Parâmetro é um valor ajustável do modelo. Podemos contar os elementos de `mod
 
 ## Cabeças e conexões de atenção
 
-No Mirim padrão há 2 camadas com 4 cabeças por camada: **4 cabeças por camada, 8 instâncias de cabeça somando as camadas**. Isso é diferente do número de pesos: cada camada usa projeções aprendidas compartilhadas entre todas as posições.
+No Feneco padrão há 2 camadas com 4 cabeças por camada: **4 cabeças por camada, 8 instâncias de cabeça somando as camadas**. Isso é diferente do número de pesos: cada camada usa projeções aprendidas compartilhadas entre todas as posições.
 
 Para uma sequência de comprimento `T`, uma máscara causal permite `T(T+1)/2` pares posição-consulta/posição-chave por cabeça, contando a posição atendendo a si mesma. Com `L` camadas e `H` cabeças em cada camada, o total permitido é:
 

@@ -22,8 +22,8 @@ Aqui `d_h` é a dimensão de uma cabeça de atenção; convenções de índice p
 
 Aplicando rotações compatíveis a Q na posição `m` e K na posição `n`, o produto entre eles pode carregar informação sobre o deslocamento relativo entre as posições. Essa propriedade ajuda a atenção a usar ordem e distância. Não significa que o modelo passe a compreender posição como uma pessoa.
 
-## No Mirim
+## No Feneco
 
-RoPE ainda não está implementado. O `Mirim` atual soma embeddings de posição aprendidos aos embeddings dos tokens. Quando estudarmos RoPE, vamos substituir ou comparar essa parte mantendo os outros elementos tão constantes quanto possível.
+RoPE ainda não está implementado. O `Feneco` atual soma embeddings de posição aprendidos aos embeddings dos tokens. Quando estudarmos RoPE, vamos substituir ou comparar essa parte mantendo os outros elementos tão constantes quanto possível.
 
 RoPE tem variantes para escala de posição, extrapolação de contexto e disposição dos pares. Vamos começar pela forma básica e documentar qualquer variação antes de usá-la.

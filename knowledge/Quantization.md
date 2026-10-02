@@ -1,6 +1,6 @@
 # Quantização
 
-O Mirim atual usa pesos de ponto flutuante comuns do PyTorch (normalmente `float32`, salvo conversões explícitas). Quantização representa pesos e, às vezes, ativações com números de menor precisão para reduzir armazenamento e potencialmente acelerar a inferência.
+O Feneco atual usa pesos de ponto flutuante comuns do PyTorch (normalmente `float32`, salvo conversões explícitas). Quantização representa pesos e, às vezes, ativações com números de menor precisão para reduzir armazenamento e potencialmente acelerar a inferência.
 
 ## Ideia básica
 
@@ -16,6 +16,6 @@ Menos bits podem diminuir o arquivo e o tráfego de memória. Pode haver perda d
 
 GGUF é um formato de arquivo usado no ecossistema llama.cpp e pode armazenar pesos quantizados em formatos diversos. GGUF não é sinônimo de quantização nem uma medida de qualidade.
 
-## No Mirim
+## No Feneco
 
 Ainda não há exportação nem quantização. Quando o modelo e a avaliação estiverem estáveis, compararemos tamanho, tempo de geração e perda/amostras antes e depois, usando o mesmo corpus e prompts. Não adianta otimizar um resultado cuja qualidade ainda não medimos.
