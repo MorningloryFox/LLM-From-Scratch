@@ -88,14 +88,18 @@ Coloque os livros em PDF dentro de `data` e extraia os textos com:
 .\scripts\extract-pdfs.ps1
 ```
 
-O comando também procura PDFs em subpastas. Cada arquivo gera um `.txt` ao lado do PDF e um `.extraction.json` com dados básicos da extração. Se o TXT já existir, ele é preservado; para substituir arquivos existentes, use `-Overwrite`. Também é possível indicar um PDF ou outra pasta:
+O comando também procura PDFs em subpastas. Os textos ficam em `data\txt` e os metadados em `data\json`, preservando as subpastas e os nomes dos PDFs para evitar colisões. Se o TXT já existir, ele é preservado; para substituir arquivos existentes, use `-Overwrite`. Também é possível indicar um PDF ou outra pasta:
 
 ```powershell
 .\scripts\extract-pdfs.ps1 -Path "data\livros"
 .\scripts\extract-pdfs.ps1 -Path "data\ua000180.pdf"
 ```
 
-A extração usa a camada de texto que já existe no PDF. Livros digitalizados como imagem precisam de OCR, e todo texto extraído deve ser revisado antes de entrar no corpus de treino.
+A extração usa a camada de texto que já existe no PDF. Livros digitalizados como imagem precisam de OCR, e todo texto extraído deve ser revisado antes de entrar no corpus de treino. Os PDFs são preservados por padrão. Se quiser apagá-los após salvar um TXT com texto extraído e o respectivo JSON, use `-DeletePdf`:
+
+```powershell
+.\scripts\extract-pdfs.ps1 -DeletePdf
+```
 
 O treino separa o texto em segmentos contíguos de 80% para treino, 10% para validação e 10% para teste. A validação escolhe o melhor checkpoint; o teste fica de fora dessa escolha. Ao final, o terminal mostra parâmetros, camadas, cabeças, perdas e onde salvou o checkpoint. Para repetir a avaliação do conjunto de teste com mais lotes:
 

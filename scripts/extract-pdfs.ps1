@@ -1,6 +1,7 @@
 param(
     [string]$Path = "data",
-    [switch]$Overwrite
+    [switch]$Overwrite,
+    [switch]$DeletePdf
 )
 
 $ErrorActionPreference = "Stop"
@@ -14,6 +15,7 @@ Push-Location $repoRoot
 try {
     $arguments = @("-m", "llm_from_scratch.extract_pdfs", "--path", $Path)
     if ($Overwrite) { $arguments += "--overwrite" }
+    if ($DeletePdf) { $arguments += "--delete-pdf" }
     & $venvPython @arguments
     if ($LASTEXITCODE -ne 0) { throw "A extração terminou com erro ($LASTEXITCODE)." }
 }

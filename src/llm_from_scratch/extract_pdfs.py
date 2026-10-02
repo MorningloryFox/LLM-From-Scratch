@@ -28,9 +28,17 @@ def find_pdfs(source: Path) -> list[Path]:
     raise SystemExit(f"Caminho não encontrado: {source}")
 
 
-def extract_one(pdf_path: Path, overwrite: bool) -> dict[str, object]:
-    text_path = pdf_path.with_suffix(".txt")
-    metadata_path = pdf_path.with_name(f"{pdf_path.stem}.extraction.json")
+def extract_one(
+    pdf_path: Path,
+    relative_path: Path,
+    output_root: Path,
+    overwrite: bool,
+    delete_pdf: bool,
+) -> dict[str, object]:
+    text_path = output_root / "txt" / relative_path.with_suffix(".txt")
+    metadata_path = output_root / "json" / relative_path.with_name(
+        f"{relative_path.stem}.extraction.json"
+    )
     if text_path.exists() and not overwrite:
         return {"pdf": str(pdf_path), "status": "Ignorado (TXT já existe)", "characters": 0}
 
@@ -45,6 +53,8 @@ def extract_one(pdf_path: Path, overwrite: bool) -> dict[str, object]:
         page_texts.append(extracted.rstrip())
 
     text = "\n\n".join(page_texts).strip() + "\n"
+    text_path.parent.mkdir(parents=True, exist_ok=True)
+    metadata_path.parent.mkdir(parents=True, exist_ok=True)
     text_path.write_text(text, encoding="utf-8")
     metadata = {
         "source_pdf": str(pdf_path.resolve()),
@@ -63,9 +73,16 @@ def extract_one(pdf_path: Path, overwrite: bool) -> dict[str, object]:
     metadata_path.write_text(
         json.dumps(metadata, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
+    deleted = False
+    if delete_pdf and text.strip():
+        pdf_path.unlink()
+        deleted = True
     return {
         "pdf": str(pdf_path),
-        "status": "Extraído" if text.strip() else "Sem texto extraível",
+        "status": (
+            "Extraído; PDF excluído" if deleted else
+            "Extraído" if text.strip() else "Sem texto extraível; PDF preservado"
+        ),
         "characters": len(text),
         "pages": len(reader.pages),
         "empty_pages": empty_pages,
@@ -84,11 +101,18 @@ def main() -> None:
         "--overwrite", action="store_true",
         help="Substitui TXT e metadados de extração que já existirem",
     )
+    parser.add_argument(
+        "--delete-pdf", action="store_true",
+        help="Apaga o PDF somente após salvar TXT e JSON com texto extraído",
+    )
     args = parser.parse_args()
-    pdfs = find_pdfs(args.path)
+    source = args.path
+    pdfs = find_pdfs(source)
     if not pdfs:
         console.print(Panel(f"Nenhum PDF encontrado em {args.path}.", title="Extração de livros", border_style="yellow"))
         return
+    input_root = source if source.is_dir() else source.parent
+    output_root = input_root
 
     rows: list[dict[str, object]] = []
     failures: list[tuple[str, str]] = []
@@ -100,7 +124,12 @@ def main() -> None:
         for pdf in pdfs:
             progress.update(task, description=f"Extraindo {pdf.name}")
             try:
-                rows.append(extract_one(pdf, args.overwrite))
+                relative_path = pdf.relative_to(input_root)
+                rows.append(
+                    extract_one(
+                        pdf, relative_path, output_root, args.overwrite, args.delete_pdf
+                    )
+                )
             except Exception as error:
                 failures.append((str(pdf), str(error)))
             progress.advance(task)
