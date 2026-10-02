@@ -80,6 +80,23 @@ Para treinar o laboratório com o conto incluído:
 .\scripts\train.ps1 -Data data/ua000180.txt
 ```
 
+### Extrair textos de vários PDFs
+
+Coloque os livros em PDF dentro de `data` e extraia os textos com:
+
+```powershell
+.\scripts\extract-pdfs.ps1
+```
+
+O comando também procura PDFs em subpastas. Cada arquivo gera um `.txt` ao lado do PDF e um `.extraction.json` com dados básicos da extração. Se o TXT já existir, ele é preservado; para substituir arquivos existentes, use `-Overwrite`. Também é possível indicar um PDF ou outra pasta:
+
+```powershell
+.\scripts\extract-pdfs.ps1 -Path "data\livros"
+.\scripts\extract-pdfs.ps1 -Path "data\ua000180.pdf"
+```
+
+A extração usa a camada de texto que já existe no PDF. Livros digitalizados como imagem precisam de OCR, e todo texto extraído deve ser revisado antes de entrar no corpus de treino.
+
 O treino separa o texto em segmentos contíguos de 80% para treino, 10% para validação e 10% para teste. A validação escolhe o melhor checkpoint; o teste fica de fora dessa escolha. Ao final, o terminal mostra parâmetros, camadas, cabeças, perdas e onde salvou o checkpoint. Para repetir a avaliação do conjunto de teste com mais lotes:
 
 ```powershell
