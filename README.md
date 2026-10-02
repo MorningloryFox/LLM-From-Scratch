@@ -10,6 +10,8 @@ O protótipo atual é um decoder Transformer pequeno em Python e PyTorch. Ele l�
 
 O corpus em [`data/tiny.txt`](./data/tiny.txt) só serve para percorrer o fluxo. Com tão pouco texto, a geração é limitada e pode não fazer sentido.
 
+Também incluímos [`data/ua000180.txt`](./data/ua000180.txt), uma transcrição em texto simples do conto *A Carteira*, de Machado de Assis. A origem e as observações sobre a extração estão em [`data/ua000180.metadata.json`](./data/ua000180.metadata.json). Esse texto serve para experimentar o fluxo com uma obra literária em português; não é corpus suficiente para formar a base compartilhada nem ensinar pesquisa web.
+
 ## A família de especialistas
 
 Cada modelo Feneco terá uma tarefa e uma avaliação próprias. Algumas direções possíveis:
@@ -68,6 +70,12 @@ Para usar outro corpus local, mudar passos, contexto ou semente:
 
 ```powershell
 .\scripts\train.ps1 -Data data/private/meu-corpus.txt -Steps 1000 -ContextLength 64 -Seed 42
+```
+
+Para treinar o laboratório com o conto incluído:
+
+```powershell
+.\scripts\train.ps1 -Data data/ua000180.txt
 ```
 
 O treino separa o texto em segmentos contíguos de 80% para treino, 10% para validação e 10% para teste. A validação escolhe o melhor checkpoint; o teste fica de fora dessa escolha. Ao final, o terminal mostra parâmetros, camadas, cabeças, perdas e onde salvou o checkpoint. Para repetir a avaliação do conjunto de teste com mais lotes:

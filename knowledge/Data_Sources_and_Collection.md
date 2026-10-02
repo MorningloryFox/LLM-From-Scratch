@@ -73,7 +73,7 @@ Separar dados por documento ou fonte antes de criar janelas de treino. Remover d
 6. Comparar a resposta com fontes recuperadas e sem elas, medindo suporte factual, cobertura, qualidade das referências e latência.
 7. Só aumentar o corpus se o resultado mostrar uma lacuna que os dados adicionais possam corrigir.
 
-Nenhuma fonte foi baixada ou aprovada para treino nesta etapa. A licença e os direitos de uso de cada material ainda precisam de revisão antes da coleta.
+Como primeiro exemplo, `data/ua000180.txt` contém uma transcrição em texto simples de *A Carteira*, de Machado de Assis. O registro `data/ua000180.metadata.json` documenta a página do Wikisource, que identifica a obra como domínio público, e a ficha correspondente no Portal Domínio Público. O PDF inicialmente extraído tinha problemas de mapeamento de caracteres; por isso, o texto final veio da transcrição do Wikisource, não do PDF. É um item piloto, não um corpus suficiente para treinar a base compartilhada. Outras fontes ainda precisam ser escolhidas e revisadas individualmente antes da coleta.
 
 ## 💡 Pergunta para Fixar
 

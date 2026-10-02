@@ -1,0 +1,14 @@
+{
+  "title": "A Carteira",
+  "author": "Machado de Assis",
+  "language": "pt-BR (texto literário histórico)",
+  "publication": "1884",
+  "text_source": "https://pt.wikisource.org/wiki/A_carteira",
+  "text_source_api": "https://pt.wikisource.org/w/api.php?action=query&prop=extracts&explaintext=1&titles=A%20carteira&format=json",
+  "text_source_status": "A página do Wikisource identifica a obra como domínio público",
+  "mec_record": "https://dominiopublico.mec.gov.br/pesquisa/DetalheObraForm.do?co_obra=16915&select_action=",
+  "requested_pdf": "data/ua000180.pdf",
+  "extraction_note": "A extração do PDF com pypdf apresentou caracteres de substituição e palavras quebradas; o TXT é a transcrição em texto simples da página Wikisource, não uma extração fiel do PDF.",
+  "retrieved_utc": "2026-10-02",
+  "text_characters": 7311
+}
