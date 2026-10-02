@@ -114,6 +114,14 @@ Gere texto com o checkpoint:
 .\.venv\Scripts\python.exe -m llm_from_scratch.generate --checkpoint checkpoints/feneco-char-0.1.pt --prompt "O modelo"
 ```
 
+Para abrir uma sessão interativa no PowerShell, em que você digita vários trechos sem executar o comando novamente:
+
+```powershell
+.\scripts\chat.ps1 -Checkpoint checkpoints/feneco-char-0.1.pt
+```
+
+Digite `sair` para fechar. O modo interativo mantém apenas o contexto recente em caracteres; este protótipo continua texto e ainda não é um assistente treinado para diálogo ou instruções.
+
 Cada treino acrescenta uma linha a `.local/experiments.jsonl`, com hash do corpus, revisão do código, configuração, contagens de parâmetros/cabeças, quantização, perdas, duração, dispositivo e tamanho do checkpoint. Consulte um resumo das execuções com:
 
 ```powershell
